@@ -1,0 +1,25 @@
+<%- include('../parts/header.ejs',{activePage: "projects"}) %>
+
+<div class="content d-flex">
+
+</div>
+
+<script>
+  $.getJSON("/api/projects",function(data){
+
+
+    $.each(data,function(key,project){
+      console.log(project);
+      imgUrl = project.imgUrl;
+      projectName = project.name;
+      projectShortDescription = project.shortDescription;
+
+      cardHTML = `<%- include("card.ejs") %>`
+
+
+      $('.content').append(cardHTML);
+
+    })
+  })
+</script>
+<%- include('../parts/footer.ejs') %>
