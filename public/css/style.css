@@ -6,7 +6,6 @@
   background-size: auto calc(100vh - 55px);
   min-height: calc(100vh - 55px);
   margin-top: 55px;
-  color: white;
   padding:20px;
 }
 
@@ -17,11 +16,11 @@ flex-flow: row wrap;
 }
 
 .bg-dark {
-    background-color: #222629!important;
+    background-color: #F6A46F!important;
 }
 
 .bg-green{
-  background-color: #618930!important;
+  background-color: #7B768F!important;
 }
 
 .bg-bright-green {
@@ -30,6 +29,10 @@ flex-flow: row wrap;
 .rounded-bottom {
   border-bottom-right-radius: 3rem!important;
   border-bottom-left-radius: 3rem!important;
+}
+
+.border{
+  border: 1px solid #181A1F!important
 }
 
 .rounded-top {
