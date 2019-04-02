@@ -21,12 +21,13 @@ flex-flow: row wrap;
 }
 
 .bg-dark {
-    background-color: #564F6F!important;
+    background-color: #554D6F!important;
 }
 
 .bg-orange {
-  background-color: #F5A36D!important;
+  background-color: #CDC4A0!important;
 }
+
 
 .rounded-bottom {
   border-bottom-right-radius: 3rem!important;
