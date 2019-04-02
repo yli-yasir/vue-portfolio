@@ -3,6 +3,9 @@
 --pen-stroke: #181A1F
 }
 
+body{
+  color: whitesmoke;
+}
 .content {
   background-image: url(#);
   background-position: center top 55px;
@@ -21,11 +24,15 @@ flex-flow: row wrap;
 }
 
 .bg-dark {
-    background-color: #554D6F!important;
+    background-color: #21252B!important;
 }
 
-.bg-orange {
-  background-color: #CDC4A0!important;
+.bg-paper {
+  background-color: #282C34!important;
+}
+
+.card {
+  border: 0px;
 }
 
 
