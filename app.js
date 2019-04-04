@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 mongoose.connect(
   "mongodb+srv://Yasir:hello1234@cluster0-phxet.mongodb.net/animals?retryWrites=true",
   {useNewUrlParser: true});
+  
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console,"connection error!!!"));

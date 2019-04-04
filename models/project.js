@@ -4,5 +4,6 @@ module.exports = mongoose.model("project",
   new mongoose.Schema({
     name: String,
     imgUrl: String,
-    shortDescription: String
+    shortDescription: String,
+    description: String
   }));

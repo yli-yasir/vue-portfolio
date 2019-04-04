@@ -4,6 +4,7 @@
         thumbnailUrl = value.imgUrl;
         name = value.name;
         shortDescription = value.shortDescription;
+        moreDetailsUrl = "<%- currentPath %>" + "/" + value._id;
         cardHTML = `<%- include("card.ejs") %>`
         $('.content').append(cardHTML);
       })
