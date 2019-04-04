@@ -1,0 +1,11 @@
+<script>
+    $.getJSON("<%- from %>",function(data){
+      $.each(data,function(index,value){
+        thumbnailUrl = value.imgUrl;
+        name = value.name;
+        shortDescription = value.shortDescription;
+        cardHTML = `<%- include("card.ejs") %>`
+        $('.content').append(cardHTML);
+      })
+    })
+</script>

@@ -1,0 +1,9 @@
+<%- include('parts/header.ejs',{activePage: "projects"}) %>
+
+<div class="content d-flex">
+
+</div>
+
+<%- include('fetchData.ejs', { from : "/api/projects"} ) %>
+
+<%- include('parts/footer.ejs') %>
