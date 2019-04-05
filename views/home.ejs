@@ -1,13 +1,14 @@
 <%- include('parts/header.ejs',{activePage: "home"}) %>
 
 <div class="content">
-  <div class="aspect-ratio-16by9">
     <div
       id="carouselExampleControls"
-      class="carousel slide aspect-ratio-child"
+      class="carousel slide mt-4"
       data-ride="carousel"
+      data-interval="false"
     >
-      <div class="carousel-inner">
+        <div class="aspect-ratio-16by9">
+      <div class="carousel-inner aspect-ratio-child">
         <div class="carousel-item active">
           <img src="https://i.imgur.com/SB2ce66.jpg" alt="First slide" />
         </div>
@@ -22,8 +23,8 @@
             allowfullscreen
           ></iframe>
         </div>
-      </div>
-      
+    </div>
+
       <a
         class="carousel-control-prev"
         href="#carouselExampleControls"
