@@ -1,9 +1,8 @@
-:root
-{
---pen-stroke: #181A1F
+:root {
+  --pen-stroke: #181a1f;
 }
 
-body{
+body {
   color: whitesmoke;
 }
 .content {
@@ -14,72 +13,76 @@ body{
   background-size: auto calc(100vh - 55px);
   min-height: calc(100vh - 55px);
   margin-top: 55px;
-  padding:20px;
+  padding: 20px;
 }
 
-.content.d-flex{
-justify-content: space-evenly;
-align-items: baseline;
-flex-flow: row wrap;
+.content.d-flex {
+  justify-content: space-evenly;
+  align-items: baseline;
+  flex-flow: row wrap;
 }
 
 .bg-dark {
-    background-color: #21252B!important;
+  background-color: #21252b !important;
 }
 
 .bg-paper {
-  background-color: #282C34!important;
+  background-color: #282c34 !important;
 }
 
 .card {
   border: 0px;
 }
 
-
 .rounded-bottom {
-  border-bottom-right-radius: 3rem!important;
-  border-bottom-left-radius: 3rem!important;
+  border-bottom-right-radius: 3rem !important;
+  border-bottom-left-radius: 3rem !important;
 }
 
-.border{
-  border: 1px solid var(--pen-stroke) !important
+.border {
+  border: 1px solid var(--pen-stroke) !important;
 }
 
 .rounded-top {
-  border-top-right-radius: 3rem!important;
-  border-top-left-radius: 3rem!important;
+  border-top-right-radius: 3rem !important;
+  border-top-left-radius: 3rem !important;
 }
 
-.rounded{
-  border-radius: 3rem!important;
+.rounded {
+  border-radius: 3rem !important;
 }
 
 .navbar-nav {
-text-align: center
+  text-align: center;
 }
 
-.aspect-ratio-16by9{
-  background-color:orange;
-  padding-top:56.25%;
-  height:0;
-  position:relative;
+.aspect-ratio-16by9 {
+  background-color: orange;
+  padding-top: 56.25%;
+  height: 0;
+  position: relative;
 }
 
-.aspect-ratio-child{
+.aspect-ratio-child {
   position: absolute;
   top: 0px;
   left: 0px;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 }
 
-.carousel-inner,.carousel-item,.carousel-item *{
-  height:100%;
-  width:100%;
+.carousel-item {
+  height: 100%;
+  width: 100%;
+  position:relative;
 }
 
 .carousel-item * {
-  object-fit: contain;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top:50%;
+  left:50%;
+  height:80%;
+  width:80%;
 }
-
 
