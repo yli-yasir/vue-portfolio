@@ -6,6 +6,7 @@
 body{
   color: whitesmoke;
 }
+
 .content {
   background-image: url(#);
   background-position: center top 55px;
@@ -13,8 +14,7 @@ body{
   background-attachment: fixed;
   background-size: auto calc(100vh - 55px);
   min-height: calc(100vh - 55px);
-  margin-top: 55px;
-  padding:20px;
+  margin-top: 70px;
 }
 
 .content.d-flex{
