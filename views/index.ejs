@@ -1,19 +1,19 @@
 <%# --DOCUMENTATION-- 
     to render an index you will need to pass the following paramters:
 
-    currentPath: this is the path of the current page, ex: /projects 
+    currentPath: String | this is the path of the current page, ex: /projects 
     used for things such as toggling active nav-item in the navbar and for 
     href navigation
 
-    ajaxFrom: this is the endpoint, the ajax script will fetch the data from it.
+    ajaxFrom: String | this is the endpoint, the ajax script will fetch the data from.
 
-    ajaxInto: a string path relative to ajax pull data script file, which points
-    to the html/ejs template the ajax script will populate and post on the page.
+    ajaxCallbackName: String | Must be one of the file names in /views/ajax/callbacks.
+
  %> 
 
 
 <%- include('parts/header.ejs',{currentPath: currentPath}) %>
 
-<%- include('pullData.ejs', { ajaxFrom : ajaxFrom, ajaxInto: ajaxInto ,currentPath: currentPath} ) %>
+<%- include('ajax/pullData.ejs', { ajaxFrom : ajaxFrom, ajaxCallbackName: ajaxCallbackName ,currentPath: currentPath} ) %>
 
 <%- include('parts/footer.ejs') %>

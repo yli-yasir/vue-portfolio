@@ -20,7 +20,7 @@ function(cardables){
       name = cardable.name;
       shortDescription = cardable.shortDescription;
       moreDetailsUrl = "<%- currentPath %>" + "/" + cardable._id;
-      cardHTML = `<%- include("components/card.ejs") %>`
+      cardHTML = `<%- include("../templates/components/card.ejs") %>`
       $('.content').append(cardHTML);
     })
-  })
+  }

@@ -5,7 +5,7 @@ router.get("/", (req, res, next) => {
   res.render("index",{
     currentPath: "/projects",
     ajaxFrom: "/api/projects",
-    ajaxInto: ""
+    ajaxCallbackName: "dataToCards"
   });
 });
 
