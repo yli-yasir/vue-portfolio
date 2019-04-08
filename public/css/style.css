@@ -71,18 +71,11 @@ body {
   height: 100%;
 }
 
-.carousel-item {
-  height: 100%;
-  width: 100%;
-  position:relative;
-}
+.carousel-inner,.carousel-item,.carousel-item *{
+  height:100%;
+  width:100%;}
 
 .carousel-item * {
-  position: absolute;
-  transform: translate(-50%,-50%);
-  top:50%;
-  left:50%;
-  height:80%;
-  width:80%;
+  object-fit: contain;
 }
 

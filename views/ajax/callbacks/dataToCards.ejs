@@ -1,0 +1,26 @@
+<%# ajax callback:
+    *Iterates over a sequence of cardables
+    *populates the card html template with data from each cardable object
+    *appends the populated card html to the page
+
+    this function must only be called on cardable objects.
+    cardable objects define the following fields:
+
+    thumbnailURL: String |  for the thumbnail image in the card.
+
+    name: String | which will be the title of the card
+    
+    shortDescription: String | which will populate thte card body
+
+%>
+
+function(cardables){
+    $.each(cardables,function(index,cardable){
+      thumbnailUrl = cardable.thumbnailUrl;
+      name = cardable.name;
+      shortDescription = cardable.shortDescription;
+      moreDetailsUrl = "<%- currentPath %>" + "/" + cardable._id;
+      cardHTML = `<%- include("components/card.ejs") %>`
+      $('.content').append(cardHTML);
+    })
+  })

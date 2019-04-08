@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res, next) => {
-  res.render("projects");
+  res.render("index",{
+    currentPath: "/projects",
+    ajaxFrom: "/api/projects",
+    ajaxInto: ""
+  });
 });
 
 //pass the id to the ejs view, which has it's own ajax script to grab the

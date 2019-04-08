@@ -2,6 +2,7 @@
 
 <div class="content">
   <div class="container-fluid">
+    <!-- First column for ad content-->
     <div class="row">
       <div class="col-sm" style="background-color:white;color:black">
         <p>
@@ -11,6 +12,8 @@
           pariatur consequatur iusto incidunt.
         </p>
       </div>
+
+      <!-- this column is for actual content-->
       <div class="col-sm-7">
         <%- include('components/carousel.ejs') %> <%-
         include('components/embed.ejs') %>
@@ -20,7 +23,10 @@
           distinctio praesentium assumenda nesciunt consectetur, id veniam non
           repellat nulla libero!
         </p>
+        
       </div>
+
+      <!-- the 3rd column is also for ads-->
       <div class="col-sm" style="background-color:white;color:black">
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque
@@ -30,7 +36,8 @@
         </p>
       </div>
     </div>
+    <!-- the closing div tag above is for the ending of the row-->
   </div>
 </div>
 
-<%- include('parts/footer.ejs') %> 
+<%- include('parts/footer.ejs') %>
