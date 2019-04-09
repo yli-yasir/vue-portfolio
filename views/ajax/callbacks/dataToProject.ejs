@@ -10,5 +10,12 @@
 %>
 
 function(project){
-    console.log(project);
+
+    var carouselHtml = `<%- include('../templates/components/carousel/container.ejs') %>`;
+    $('.true-content').append(carouselHtml);
+
+    $.each(project.imgUrls,function(index,url){
+        $('.carousel-inner').append(`<%- include('../templates/components/carousel/item.ejs') %>`)
+    });
+
 }

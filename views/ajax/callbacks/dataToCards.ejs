@@ -27,12 +27,12 @@
 
 function(cardables){
     $.each(cardables,function(index,cardable){
-      thumbnailUrl = cardable.thumbnailUrl;
-      name = cardable.name;
-      shortDescription = cardable.shortDescription;
-      moreDetailsUrl = "<%- currentPath %>" + "/" + cardable._id;
-      cardHTML = `<%- include("../templates/components/card.ejs") %>`
-      $('.true-content').append(cardHTML);
+      var thumbnailUrl = cardable.thumbnailUrl;
+      var name = cardable.name;
+      var shortDescription = cardable.shortDescription;
+      var moreDetailsUrl = "<%- currentPath %>" + "/" + cardable._id;
+      var cardHtml = `<%- include("../templates/components/card.ejs") %>`
+      $('.true-content').append(cardHtml);
     })
     
   }

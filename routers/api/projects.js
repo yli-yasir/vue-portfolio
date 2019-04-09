@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try{
-  let result = await projectModel.find({_id: req.params.id}).exec();
+  let result = await projectModel.findById(req.params.id).exec();
   console.log(result);
   res.status(200).send(result);
 }
