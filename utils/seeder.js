@@ -1,36 +1,14 @@
 const mongoose = require("mongoose");
+const Project = require("../models/project")
 
-var options = { discriminatorKey: "kind" };
-
-var eventSchema = new mongoose.Schema(
-  { time: { type: Date, default: Date.now() } },options
-);
-
-var Event = mongoose.model("Event", eventSchema);
-
-// ClickedLinkEvent is a special type of Event that has
-// a URL.
-var ClickedLinkEvent = Event.discriminator(
-  "ClickedLink",
-  new mongoose.Schema({ url: String })
-);
-
-var SignupEvent = Event.discriminator("signup",
-new mongoose.Schema({username: String}));
-
-// When you create a generic event, it can't have a URL field...
-var genericEvent = new Event({ time: Date.now(), url: "google.com" });
-
-var clickedEvent = new ClickedLinkEvent({
-  time: Date.now(),
-  url: "google.com"
-});
-
-var signupEvent = new SignupEvent({username: "yoloa"})
-
-genericEvent.save(function(error,doc){console.log("tried to save generic event")});
-clickedEvent.save(function(error,doc){console.log("tried to save clicked event")});
-signupEvent.save(function(error,doc){console.log("tried to save signup event")});
-
-console.log("saving models...")
+new Project({
+  name: "Timetable Assistant",
+  thumbnailUrl: "https://www.any.do/v4/images/assistant/assistant@2x.png",
+  shortDescription: "This program will help you organize your timetable!",
+  description: "This program was made in JavaFx, it will help you organize your timetable!",
+  youtubeEmbed: "https://www.youtube.com/embed/jw2etItmQjk?list=RDjw2etItmQjk",
+  imgUrls: ["https://i.imgur.com/amCdfuY.jpg","https://i.imgur.com/5skWNZ0.jpg"],
+  links: [{label:"android",url:"https://www.android.com/"},{label:"ios",url:"https://www.apple.com/"}],
+  hi: "hello"
+}).save(function(error){if (!error){console.log("saved dummy project")}});
 
