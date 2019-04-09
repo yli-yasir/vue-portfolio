@@ -13,7 +13,11 @@ router.get("/", (req, res, next) => {
 //appropriate data
 
 router.get("/:id", (req, res, next) => {
-
+  res.render("single",{
+    currentPath: "/projects",
+    ajaxFrom: "/api/projects/" + req.params.id,
+    ajaxCallbackName: "dataToSingleProject"
+  })
 });
 
 module.exports = router;

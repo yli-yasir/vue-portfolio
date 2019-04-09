@@ -17,7 +17,7 @@
     
     shortDescription : String | which will populate thte card body
 
-    2-You must define a container in your html that has the .container
+    2-You must define a container in your html that has the .true-content
     class, the populated card html will be appended to this container.
 
     3- you must define an element with the class .loading, this element
@@ -27,13 +27,12 @@
 
 function(cardables){
     $.each(cardables,function(index,cardable){
-      console.log(cardable);
       thumbnailUrl = cardable.thumbnailUrl;
       name = cardable.name;
       shortDescription = cardable.shortDescription;
       moreDetailsUrl = "<%- currentPath %>" + "/" + cardable._id;
       cardHTML = `<%- include("../templates/components/card.ejs") %>`
-      $('.content').append(cardHTML);
+      $('.true-content').append(cardHTML);
     })
     
   }

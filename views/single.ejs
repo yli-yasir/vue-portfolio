@@ -1,4 +1,17 @@
-<%- include('parts/header.ejs',{currentPath: "/home"}) %>
+<%# --DOCUMENTATION-- 
+    to render this you will need to pass the following paramters:
+
+    currentPath: String | this is the path of the current page, ex: /projects 
+    used for things such as toggling active nav-item in the navbar and for 
+    href navigation
+
+    ajaxFrom: String | this is the endpoint, the ajax script will fetch the data from.
+
+    ajaxCallbackName: String | Must be one of the file names in /views/ajax/callbacks.
+
+ %> 
+
+<%- include('parts/header.ejs',{currentPath: currentPath}) %>
 
 <div class="content">
   <div class="container-fluid">
@@ -13,17 +26,9 @@
         </p>
       </div>
 
-      <!-- this column is for actual content-->
-      <div class="col-sm-7">
-        <%- include('components/carousel.ejs') %> <%-
-        include('components/embed.ejs') %>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-          similique fuga placeat. Explicabo cum molestiae velit eligendi, ut ad,
-          distinctio praesentium assumenda nesciunt consectetur, id veniam non
-          repellat nulla libero!
-        </p>
-        
+      <!-- this column is for true content-->
+      <div class="col-sm-7 true-content">
+
       </div>
 
       <!-- the 3rd column is also for ads-->
@@ -39,5 +44,7 @@
     <!-- the closing div tag above is for the ending of the row-->
   </div>
 </div>
+
+<%- include('ajax/pullData.ejs',{ ajaxFrom: ajaxFrom , ajaxCallbackName: ajaxCallbackName }) %>
 
 <%- include('parts/footer.ejs') %>
