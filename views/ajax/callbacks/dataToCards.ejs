@@ -1,21 +1,33 @@
-<%# ajax callback:
-    *Iterates over a sequence of cardables
-    *populates the card html template with data from each cardable object
-    *appends the populated card html to the page
+<%# --DOCUMENTATION--
 
-    this function must only be called on cardable objects.
+    AJAX callback:
+    *Iterates over a sequence of cardables (See requirement No.1 below)
+    *Populates the card html template with data from each cardable object
+    *Appends the populated card html to the page
+    *Hides the progress indicator
+
+    Requirements:
+
+    1-this function must only be called on cardable objects.
     cardable objects define the following fields:
 
-    name: String | which will be the title of the card
+    name : String | which will be the title of the card
 
-    thumbnailURL: String |  for the thumbnail image in the card.
+    thumbnailURL : String |  for the thumbnail image in the card.
     
-    shortDescription: String | which will populate thte card body
+    shortDescription : String | which will populate thte card body
+
+    2-You must define a container in your html that has the .container
+    class, the populated card html will be appended to this container.
+
+    3- you must define an element with the class .loading, this element
+    will be hidden once the data has been appended to the page.
 
 %>
 
 function(cardables){
     $.each(cardables,function(index,cardable){
+      console.log(cardable);
       thumbnailUrl = cardable.thumbnailUrl;
       name = cardable.name;
       shortDescription = cardable.shortDescription;
@@ -23,4 +35,5 @@ function(cardables){
       cardHTML = `<%- include("../templates/components/card.ejs") %>`
       $('.content').append(cardHTML);
     })
+    
   }

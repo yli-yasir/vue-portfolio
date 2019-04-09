@@ -14,6 +14,8 @@
 
 <%- include('parts/header.ejs',{currentPath: currentPath}) %>
 
+<div class="content"></div>
+
 <%- include('ajax/pullData.ejs', { ajaxFrom : ajaxFrom, ajaxCallbackName: ajaxCallbackName ,currentPath: currentPath} ) %>
 
 <%- include('parts/footer.ejs') %>

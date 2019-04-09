@@ -9,6 +9,5 @@ new Project({
   youtubeEmbed: "https://www.youtube.com/embed/jw2etItmQjk?list=RDjw2etItmQjk",
   imgUrls: ["https://i.imgur.com/amCdfuY.jpg","https://i.imgur.com/5skWNZ0.jpg"],
   links: [{label:"android",url:"https://www.android.com/"},{label:"ios",url:"https://www.apple.com/"}],
-  hi: "hello"
 }).save(function(error){if (!error){console.log("saved dummy project")}});
 

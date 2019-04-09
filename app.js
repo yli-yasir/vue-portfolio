@@ -15,7 +15,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error!!!"));
 db.once("open", () => {
   console.log("Connected to mongo...");
-  require('./utils/seeder.js')
+  //require('./utils/seeder.js')
 });
 
 //Set view engine and static files dir.
