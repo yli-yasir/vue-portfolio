@@ -2,6 +2,11 @@
   --pen-stroke: #181a1f;
 }
 
+.router-link-active {
+  color:#86C232!important;
+
+}
+
 body {
   color: whitesmoke;
 }
