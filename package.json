@@ -2,14 +2,13 @@
   "name": "soulera",
   "version": "1.0.0",
   "description": "Soulera webserver",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yasir Al-Baldawi",
   "license": "None",
   "dependencies": {
-    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "mongoose": "^5.4.19"
   }
