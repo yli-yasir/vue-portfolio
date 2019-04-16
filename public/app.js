@@ -1,31 +1,3 @@
-//Fake response to simulate response from mongo
-fakeResponse = [
-  {
-    id: 0,
-    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
-  },
-  {
-    id: 0,
-    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
-  },
-  {
-    id: 0,
-    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
-  },
-  {
-    id: 0,
-    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
-  },
-  {
-    id: 0,
-    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
-  },
-  {
-    id: 0,
-    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
-  }
-];
-
 //Navbar Component
 const navbar = Vue.component("navbar", {
   template: navbarHtml
@@ -71,13 +43,18 @@ var projectsIndexScreen = {
     };
   },
   template: projectsIndexScreenHtml,
-  mounted: function() {
-    var vm = this;
-    setTimeout(function() {
-      vm.projects = fakeResponse;
-      vm.loading= false;
-      vm.success = true;
-    }, 2000);
+  mounted: async function() {
+    try{
+    let response = await axios.get('/api/projects');
+    this.projects = response.data;
+    this.success = true;
+    this.loading = false;
+    }
+    catch(err){
+      console.log(err);
+      this.error = true; 
+      this.loading = false;
+    }
   }
 };
 
