@@ -12,7 +12,7 @@ const navbarHtml = `
     <!--nav-->
     <div class="navbar-nav ml-sm-4">
       <router-link class="nav-item nav-link" to="/home">Home</router-link>
-      <router-link class="nav-item nav-link" to="/projects">Projects</router-link>
+      <router-link class="nav-item nav-link" :to="{name: 'projects'}">Projects</router-link>
       <router-link class="nav-item nav-link" to="/members">Members</router-link>
 
     </div>
@@ -73,10 +73,10 @@ const cardHtml = `
   {{thumbnailUrl}}
   </p>
 
-  <a href="moreDetailsUrl"
+  <router-link :to="{name: 'projectDetails' , params: {projectName: '123'}}"
     class="btn btn-success rounded">
     More Details
-  </a>
+  </router-link>
 
 </div>
 

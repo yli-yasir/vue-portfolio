@@ -103,10 +103,7 @@ const routes = [
   { 
     name: 'projectDetails',
     path: "/projects/:projectName", 
-  component: projectDetailsScreen },
-
-  
-
+  component: projectDetailsScreen }
 ];
 
 const router = new VueRouter({
@@ -116,7 +113,4 @@ const router = new VueRouter({
 var app = new Vue({
   router,
   el: "#app",
-  mounted: function() {
-    console.log(this.$router);
-  }
 });
