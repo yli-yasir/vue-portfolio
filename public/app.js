@@ -42,12 +42,25 @@ const errorIndicator = Vue.component("error-indicator", {
 });
 
 //Card component
-var card = {
+var card = Vue.component('card',{
   props: ["thumbnailUrl"],
   template: cardHtml
-};
+});
 
-//projects index screen component
+
+//Youtube embed component
+var youtubeEmbed = Vue.component('youtube-embed',{
+  props: ["embedUrl"],
+  template: youtubeEmbedHtml
+});
+
+//Carousel component
+var carousel = Vue.component('carousel',{
+  props: ['imgUrls'],
+  template: carouselHtml
+})
+
+//Projects index screen component
 var projectsIndexScreen = {
   data: function() {
     return {
@@ -57,7 +70,6 @@ var projectsIndexScreen = {
       error: false
     };
   },
-  components: { card },
   template: projectsIndexScreenHtml,
   mounted: function() {
     var vm = this;
@@ -69,7 +81,33 @@ var projectsIndexScreen = {
   }
 };
 
-const routes = [{ path: "/projects", component: projectsIndexScreen }];
+//Project details screen component
+var projectDetailsScreen= {
+  data: function(){
+    return {
+      youtubeEmbedUrl: "https://www.youtube.com/embed/rMh2ygHlHRs",
+      imgUrls: ["https://i.imgur.com/amCdfuY.jpg","https://i.imgur.com/5skWNZ0.jpg"],
+      description: 'lorem ipsum dolar idk come on man thsi is some text!',
+      links: [{label: 'Download', url: 'https://www.apple.com'},{label: 'appstore',url:'https://www.google.com'}]
+    }
+  },
+  template: projectDetailsScreenHtml
+};
+
+
+const routes = [
+  { 
+    name: 'projects',
+    path: "/projects", 
+  component: projectsIndexScreen },
+  { 
+    name: 'projectDetails',
+    path: "/projects/:projectName", 
+  component: projectDetailsScreen },
+
+  
+
+];
 
 const router = new VueRouter({
   routes: routes
