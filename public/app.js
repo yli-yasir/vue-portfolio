@@ -1,58 +1,4 @@
-const navbarHtml = ` <!--navbar--------------------------------------------------->
-<nav class="navbar shadow rounded-bottom justify-content-center navbar-expand-sm navbar-dark bg-dark fixed-top">
-  <!--toggler-->
-  <button class="navbar-toggler mb-1" type="button" data-toggle="collapse" data-target="#navContainer" aria-controls="navContainer" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
-
-  <!--nav container-->
-  <div class="collapse navbar-collapse" id="navContainer">
-
-    <!--nav-->
-    <div class="navbar-nav ml-sm-4">
-      <router-link class="nav-item nav-link" to="/home">Home</router-link>
-      <router-link class="nav-item nav-link" to="/projects">Projects</router-link>
-      <router-link class="nav-item nav-link" to="/members">Members</router-link>
-
-    </div>
-    <!--end of nav-->
-
-  </div>
-  <!--end of nav container-->
-
-</nav>`;
-
-const cardHtml = `<div class="card m-4 rounded bg-dark shadow" style="width: 18rem;">
-  
-<img :src="thumbnailUrl" class="card-img-top rounded-top p-1" alt="thumbnail">
-
-<div class="card-body">
-
-  <h5 class="card-title">{{key}}</h5>
-
-  <p class="card-text">
-  {{thumbnailUrl}}
-  </p>
-
-  <a href="moreDetailsUrl"
-    class="btn btn-success rounded">
-    More Details
-  </a>
-
-</div>
-
-</div>
-`;
-
-var navbar = Vue.component("navbar", {
-  template: navbarHtml
-});
-
-var card = {
-  props: ["thumbnailUrl"],
-  template: cardHtml
-};
-
+//Fake response to simulate response from mongo
 fakeResponse = [
   {
     id: 0,
@@ -60,18 +6,39 @@ fakeResponse = [
   }
 ];
 
-var projectsIndexComponent = {
+//Navbar Component
+const navbar = Vue.component("navbar", {
+  template: navbarHtml
+});
+
+//Progress indicator component
+const progressIndicator = Vue.component("progress-indicator", {
+  template: progressIndicatorHtml
+});
+
+//Error indicator component
+const errorIndicator = Vue.component("error-indicator", {
+  template: errorIndicatorHtml
+});
+
+//Card component
+var card = {
+  props: ["thumbnailUrl"],
+  template: cardHtml
+};
+
+//projects index screen component
+var projectsIndexScreen = {
   data: function() {
     return {
-      projects: []
+      projects: [],
+      loading: true,
+      success: false,
+      error: false
     };
   },
   components: { card },
-  template: `<div><card 
-  v-for="project in projects" 
-  :key="project.id"
-  :thumbnailUrl="project.thumbnailUrl">
-  </card></div>`,
+  template: projectsIndexScreenHtml,
   mounted: function() {
     var vm = this;
     setTimeout(function() {
@@ -80,7 +47,7 @@ var projectsIndexComponent = {
   }
 };
 
-const routes = [{ path: "/projects", component: projectsIndexComponent }];
+const routes = [{ path: "/projects", component: projectsIndexScreen }];
 
 const router = new VueRouter({
   routes: routes
