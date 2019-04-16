@@ -3,6 +3,26 @@ fakeResponse = [
   {
     id: 0,
     thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
+  },
+  {
+    id: 0,
+    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
+  },
+  {
+    id: 0,
+    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
+  },
+  {
+    id: 0,
+    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
+  },
+  {
+    id: 0,
+    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
+  },
+  {
+    id: 0,
+    thumbnailUrl: "https://i.imgur.com/nmJtFM5.jpg"
   }
 ];
 
@@ -43,6 +63,8 @@ var projectsIndexScreen = {
     var vm = this;
     setTimeout(function() {
       vm.projects = fakeResponse;
+      vm.loading= false;
+      vm.success = true;
     }, 2000);
   }
 };

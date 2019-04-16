@@ -26,7 +26,7 @@ html, body, #app {
 }
 
 .router-link-active {
-  color:#86C232!important;
+  color: var(--teal)!important;
 }
 
 .spinner-container{
@@ -36,6 +36,7 @@ html, body, #app {
 .spinner-border{
   height:8rem;
   width:8rem;
+  color: var(--teal)!important;
 }
 
 .bg-dark {
