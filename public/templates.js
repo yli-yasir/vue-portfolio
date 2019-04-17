@@ -36,8 +36,9 @@ const errorIndicatorHtml = `
 </div>
 `;
 
-const projectsIndexScreenHtml = `
-<div>
+const loadingComponentHtml = (contentHtml) => {
+  return `
+  <div>
 
 <!-- progress indicator -->
 
@@ -46,18 +47,21 @@ const projectsIndexScreenHtml = `
 <!-- cards for each project will be rendered in here -->
 
 <template v-if="success">
-<card 
-  v-for="project in projects" 
-  :thumbnail-url="project.thumbnailUrl"
-  :key="project.id"
-  >
-  </card>
-  </template>
+${contentHtml}
+</template>
 
   <error-indicator v-if="error"></error-indicator>
 
   </div>
-  `;
+  `
+};
+
+const projectsIndexScreenHtml = loadingComponentHtml(`<card 
+  v-for="project in projects" 
+  :thumbnail-url="project.thumbnailUrl"
+  :key="project.id"
+  >
+  </card>`);
 
 const cardHtml = `
 
