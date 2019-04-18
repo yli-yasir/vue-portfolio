@@ -57,9 +57,12 @@ ${contentHtml}
 };
 
 const projectsIndexScreenHtml = loadingComponentHtml(`<card 
-  v-for="project in projects" 
+  v-for="project in response" 
   :thumbnail-url="project.thumbnailUrl"
-  :key="project.id"
+  :short-description="project.shortDescription"
+  :name="project.name"
+  :key="project._id"
+  :url="{name: 'projectDetails' , params: { _id : project._id } }"
   >
   </card>`);
 
@@ -71,13 +74,13 @@ const cardHtml = `
 
 <div class="card-body">
 
-  <h5 class="card-title"></h5>
+  <h5 class="card-title">{{name}}</h5>
 
   <p class="card-text">
-  {{thumbnailUrl}}
+  {{shortDescription}}
   </p>
 
-  <router-link :to="{name: 'projectDetails' , params: {projectName: '123'}}"
+  <router-link :to="url"
     class="btn btn-success rounded">
     More Details
   </router-link>
@@ -137,7 +140,7 @@ const carouselHtml= `
 </div>`;
 
 
-const projectDetailsScreenHtml = `
+const projectDetailsScreenHtml = loadingComponentHtml(`
 <div class="container-fluid">
     <!-- First column for ad content-->
     <div class="row">
@@ -152,10 +155,10 @@ const projectDetailsScreenHtml = `
 
       <!-- this column is for true content-->
       <div class="col-sm-7 true-content">
-      <youtube-embed :embed-url="youtubeEmbedUrl"></youtube-embed>
-      <carousel :img-urls="imgUrls"></carousel>
-      <p>{{description}}</p>
-      <p v-for='link in links'>{{link.label}} : {{link.url}}</p>
+      <youtube-embed :embed-url="response.youtubeEmbed"></youtube-embed>
+      <carousel :img-urls="response.imgUrls"></carousel>
+      <p>{{response.description}}</p>
+      <p v-for='link in response.links'>{{link.label}} : {{link.url}}</p>
       </div>
 
       <!-- the 3rd column is also for ads-->
@@ -169,4 +172,4 @@ const projectDetailsScreenHtml = `
       </div>
     </div>
     <!-- the closing div tag above is for the ending of the row-->
-  </div>`;
+  </div>`);

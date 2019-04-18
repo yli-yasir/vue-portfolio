@@ -15,7 +15,7 @@ const errorIndicator = Vue.component("error-indicator", {
 
 //Card component
 var card = Vue.component("card", {
-  props: ["thumbnailUrl"],
+  props: ["thumbnailUrl","shortDescription","name","url"],
   template: cardHtml
 });
 
@@ -32,21 +32,22 @@ var carousel = Vue.component("carousel", {
 });
 
 //Generic Component that loads data...
-const loadingComponent = function(template, endpoint) {
-  return {
+const loadingComponent = function(template, endpoint,reloadOn) {
+  var component =  {
     data: function() {
       return {
-        response: [],
+        response: null ,
         loading: true,
         success: false,
         error: false
       };
     },
-    template: template,
-    mounted: async function() {
+    template: template};
+
+    component[reloadOn]=  async function() {
       try {
-        let response = await axios.get(endpoint);
-        this.projects = response.data;
+        let response = await axios.get(endpoint.apply(this));
+        this.response = response.data;
         this.success = true;
         this.loading = false;
       } catch (err) {
@@ -54,31 +55,26 @@ const loadingComponent = function(template, endpoint) {
         this.error = true;
         this.loading = false;
       }
-    }
+    };
+
+    return component;
   };
-};
+
 
 //Projects index screen component
-var projectsIndexScreen = loadingComponent(projectsIndexScreenHtml,"/api/projects");
+var projectsIndexScreen = loadingComponent(
+  projectsIndexScreenHtml,
+  () => {return "/api/projects"},
+  'created'
+  );
 
 //Project details screen component
-var projectDetailsScreen = {
-  data: function() {
-    return {
-      youtubeEmbedUrl: "https://www.youtube.com/embed/rMh2ygHlHRs",
-      imgUrls: [
-        "https://i.imgur.com/amCdfuY.jpg",
-        "https://i.imgur.com/5skWNZ0.jpg"
-      ],
-      description: "lorem ipsum dolar idk come on man thsi is some text!",
-      links: [
-        { label: "Download", url: "https://www.apple.com" },
-        { label: "appstore", url: "https://www.google.com" }
-      ]
-    };
-  },
-  template: projectDetailsScreenHtml
-};
+var projectDetailsScreen = loadingComponent(projectDetailsScreenHtml,
+   function(){{ return "/api/projects/" + this.$route.params._id}},
+   'mounted'
+   );
+
+
 
 const routes = [
   {
@@ -88,7 +84,7 @@ const routes = [
   },
   {
     name: "projectDetails",
-    path: "/projects/:projectName",
+    path: "/projects/:_id",
     component: projectDetailsScreen
   }
 ];
