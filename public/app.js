@@ -32,74 +32,69 @@ var carousel = Vue.component("carousel", {
 });
 
 //Generic Component that loads data...
-const loadingComponent = function(options) {
-  var component = {
-    data: function() {
-      return {
-        extras: options.extras,
-        response: null,
-        loading: true,
-        success: false,
-        error: false
-      };
-    },
-    template: options.template
-  };
-
-  component[options.reloadOn] = async function() {
-    try {
-      let response = await axios.get(options.endpoint.apply(this));
-      this.response = response.data;
-      this.success = true;
-      this.loading = false;
-    } catch (err) {
-      console.error(err);
-      this.error = true;
-      this.loading = false;
-    }
-  };
-
-  return component;
-};
-
-const indexComponent = function(endpoint, extras) {
-  return loadingComponent({
-    template: indexScreenHtml,
-    endpoint: endpoint,
-    reloadOn: "mounted",
-    extras: extras
-  });
-};
-
-//Projects index screen component
-var projectsIndexScreen = indexComponent(
-  () => {
-    return "/api/projects";
+const loadingComponentMixin = {
+  props: ["endpoint"],
+  data: function() {
+    return {
+      response: null,
+      loading: true,
+      success: false,
+      error: false,
+      load: async function() {
+        try {
+          let response = await axios.get(this.endpoint);
+          this.response = response.data;
+          this.success = true;
+          this.loading = false;
+        } catch (err) {
+          console.error(err);
+          this.error = true;
+          this.loading = false;
+        }
+      }
+    };
   },
-  { leadsTo: "projectDetails" }
-);
+  mounted: function() {
+    this.load();
+  },
+  watch: {
+    endpoint: function(){
+      this.load()
+    }
+  }
+
+};
+
+const indexComponent = {
+  mixins: [loadingComponentMixin],
+  props: ["routeForSingle"],
+  template: indexComponentHtml
+};
 
 //Project details screen component
-var projectDetailsScreen = loadingComponent({
-  template: projectDetailsScreenHtml,
-  endpoint: function() {
-    {
-      return "/api/projects/" + this.$route.params._id;
-    }
-  },
-  reloadOn: "mounted"
-});
+var projectDetailsScreen = {
+  mixins: [loadingComponentMixin],
+  template: projectDetailsScreenHtml
+};
 
 const routes = [
   {
-    name: "projects",
+    name: "projectsIndex",
     path: "/projects",
-    component: projectsIndexScreen
+    component: indexComponent,
+    props: (route) => {return {endpoint: '/api/projects',routeForSingle: 'projectDetails'}}
   },
   {
     name: "projectDetails",
     path: "/projects/:_id",
-    component: projectDetailsScreen
+    component: projectDetailsScreen,
+    props: (route) => {return  {endpoint: '/api/projects' + route.params_id}}
+  },
+  {
+    name: "membersIndex",
+    path: "/members",
+    component: indexComponent,
+    props: function(){return {endpoint: '/api/projects' , routeForSingle: 'projectDetails'}}
   }
 ];
 

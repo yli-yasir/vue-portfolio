@@ -12,7 +12,7 @@ const navbarHtml = `
     <!--nav-->
     <div class="navbar-nav ml-sm-4">
       <router-link class="nav-item nav-link" to="/home">Home</router-link>
-      <router-link class="nav-item nav-link" :to="{name: 'projects'}">Projects</router-link>
+      <router-link class="nav-item nav-link" :to="{name: 'projectsIndex'}">Projects</router-link>
       <router-link class="nav-item nav-link" to="/members">Members</router-link>
 
     </div>
@@ -53,16 +53,16 @@ ${contentHtml}
   <error-indicator v-if="error"></error-indicator>
 
   </div>
-  `
+   `
 };
 
-const indexScreenHtml = loadingComponentHtml(`<card 
+const indexComponentHtml = loadingComponentHtml(`<card 
   v-for="item in response" 
   :thumbnail-url="item.thumbnailUrl"
   :short-description="item.shortDescription"
   :name="item.name"
   :key="item._id"
-  :url="{name: extras.leadsTo , params: { _id : item._id } }"
+  :url="{name: routeForSingle , params: { _id : item._id } }"
   >
   </card>`);
 
