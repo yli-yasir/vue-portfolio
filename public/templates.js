@@ -56,13 +56,13 @@ ${contentHtml}
   `
 };
 
-const projectsIndexScreenHtml = loadingComponentHtml(`<card 
-  v-for="project in response" 
-  :thumbnail-url="project.thumbnailUrl"
-  :short-description="project.shortDescription"
-  :name="project.name"
-  :key="project._id"
-  :url="{name: 'projectDetails' , params: { _id : project._id } }"
+const indexScreenHtml = loadingComponentHtml(`<card 
+  v-for="item in response" 
+  :thumbnail-url="item.thumbnailUrl"
+  :short-description="item.shortDescription"
+  :name="item.name"
+  :key="item._id"
+  :url="{name: extras.leadsTo , params: { _id : item._id } }"
   >
   </card>`);
 

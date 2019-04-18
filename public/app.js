@@ -15,7 +15,7 @@ const errorIndicator = Vue.component("error-indicator", {
 
 //Card component
 var card = Vue.component("card", {
-  props: ["thumbnailUrl","shortDescription","name","url"],
+  props: ["thumbnailUrl", "shortDescription", "name", "url"],
   template: cardHtml
 });
 
@@ -32,49 +32,63 @@ var carousel = Vue.component("carousel", {
 });
 
 //Generic Component that loads data...
-const loadingComponent = function(template, endpoint,reloadOn) {
-  var component =  {
+const loadingComponent = function(options) {
+  var component = {
     data: function() {
       return {
-        response: null ,
+        extras: options.extras,
+        response: null,
         loading: true,
         success: false,
         error: false
       };
     },
-    template: template};
-
-    component[reloadOn]=  async function() {
-      try {
-        let response = await axios.get(endpoint.apply(this));
-        this.response = response.data;
-        this.success = true;
-        this.loading = false;
-      } catch (err) {
-        console.error(err);
-        this.error = true;
-        this.loading = false;
-      }
-    };
-
-    return component;
+    template: options.template
   };
 
+  component[options.reloadOn] = async function() {
+    try {
+      let response = await axios.get(options.endpoint.apply(this));
+      this.response = response.data;
+      this.success = true;
+      this.loading = false;
+    } catch (err) {
+      console.error(err);
+      this.error = true;
+      this.loading = false;
+    }
+  };
+
+  return component;
+};
+
+const indexComponent = function(endpoint, extras) {
+  return loadingComponent({
+    template: indexScreenHtml,
+    endpoint: endpoint,
+    reloadOn: "mounted",
+    extras: extras
+  });
+};
 
 //Projects index screen component
-var projectsIndexScreen = loadingComponent(
-  projectsIndexScreenHtml,
-  () => {return "/api/projects"},
-  'created'
-  );
+var projectsIndexScreen = indexComponent(
+  () => {
+    return "/api/projects";
+  },
+  { leadsTo: "projectDetails" }
+);
 
 //Project details screen component
-var projectDetailsScreen = loadingComponent(projectDetailsScreenHtml,
-   function(){{ return "/api/projects/" + this.$route.params._id}},
-   'mounted'
-   );
-
-
+var projectDetailsScreen = loadingComponent({
+  template: projectDetailsScreenHtml,
+  endpoint: function() {
+    {
+      return "/api/projects/" + this.$route.params._id;
+    }
+  },
+  reloadOn: "mounted"
+});
 
 const routes = [
   {
