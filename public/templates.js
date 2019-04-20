@@ -25,9 +25,11 @@ const navbarHtml = `
 
 const progressIndicatorHtml = `
 <div class="spinner-container">
+<div class="spinner">
 <!--progress indicator-->
-<div class="spinner-border text-warning" role="status">
+<div class="spinner-border" role="status">
   <span class="sr-only">Loading...</span>
+</div>
 </div>
 </div>`;
 
@@ -38,21 +40,21 @@ const errorIndicatorHtml = `
 
 const loadingComponentHtml = (contentHtml) => {
   return `
-  <div>
+  <template>
 
 <!-- progress indicator -->
 
-<progress-indicator v-if="loading"></progress-indicator>
+<progress-indicator v-if="success"></progress-indicator>
 
 <!-- cards for each project will be rendered in here -->
 
-<template v-else-if="success">
+<template v-else-if="loading">
 ${contentHtml}
 </template>
 
   <error-indicator v-else></error-indicator>
 
-  </div>
+  </template>
    `
 };
 
@@ -144,6 +146,7 @@ const carouselHtml= `
 
 
 const projectDetailsScreenHtml = loadingComponentHtml(`
+<div class="contaianer-fluid">
 <div class="row">
     <!-- First column for ad content-->
       <div class="col-sm" style="background-color:white;color:black">
@@ -174,6 +177,7 @@ const projectDetailsScreenHtml = loadingComponentHtml(`
       </div>
     </div>
     <!-- the closing div tag above is for the ending of the row-->
+    </div>
   `);
 
 
@@ -190,15 +194,17 @@ const projectDetailsScreenHtml = loadingComponentHtml(`
 
  
 const homeScreenHtml =
-    `<div class="row align-items-start justify-content-center">
-      <div class="col-sm-7 border">
+    `<div class="container-fluid">
+    <div class="row h-100 align-items-start justify-content-center">
+      <div class="col-sm-7 h-100 border">
       <news-screen></news-screen>
       </div>
-      <div class="col-sm border">
+      <div class="col-sm h-100 border">
       <index-screen
       endpoint="/api/projects"
       route-for-single="projectDetails">
       </index-screen>
+      </div>
       </div>
       </div>
     `

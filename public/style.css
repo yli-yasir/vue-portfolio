@@ -33,7 +33,16 @@ html, body, #app {
 }
 
 .spinner-container{
-  margin:auto;
+  height:100%;
+  width:100%;
+  position:relative;
+}
+
+.spinner{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
 }
 
 .spinner-border{
@@ -41,6 +50,7 @@ html, body, #app {
   width:8rem;
   color: var(--teal)!important;
 }
+
 
 .bg-dark {
   background-color: #21252b !important;
