@@ -2,7 +2,7 @@
 //they can be viewed as cards
 
 module.exports = {
-    name: String,
+    title: String,
     thumbnailUrl: String,
     shortDescription: String,
     

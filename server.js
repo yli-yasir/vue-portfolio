@@ -16,7 +16,7 @@ db.once("open", () => {
   console.log("Connected to mongo...");
   //require('./utils/seeder.js')
 });
-//---MONGO---
+//---/MONGO---
 
 
 server.use("/public", express.static("public"));

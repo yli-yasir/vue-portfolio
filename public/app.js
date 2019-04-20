@@ -15,7 +15,7 @@ const errorIndicator = Vue.component("error-indicator", {
 
 //Card component
 var card = Vue.component("card", {
-  props: ["thumbnailUrl", "shortDescription", "name", "url"],
+  props: ["thumbnailUrl", "shortDescription", "title", "url"],
   template: cardHtml
 });
 
@@ -42,8 +42,10 @@ const loadingComponentMixin = {
       error: false,
       load: async function() {
         try {
+          console.log('making AJAX request to ' + this.endpoint)
           let response = await axios.get(this.endpoint);
           this.response = response.data;
+          console.log(this.response.length)
           this.success = true;
           this.loading = false;
         } catch (err) {
@@ -58,43 +60,66 @@ const loadingComponentMixin = {
     this.load();
   },
   watch: {
-    endpoint: function(){
-      this.load()
+    endpoint: function() {
+      this.load();
     }
   }
-
 };
 
-const indexComponent = {
+const indexScreenComponent = {
   mixins: [loadingComponentMixin],
   props: ["routeForSingle"],
-  template: indexComponentHtml
+  template: indexScreenHtml
 };
 
 //Project details screen component
-var projectDetailsScreen = {
+var projectDetailsScreenComponent = {
   mixins: [loadingComponentMixin],
   template: projectDetailsScreenHtml
 };
 
+
+
+var newsScreenComponent= Vue.component('news-screen',{
+  mixins: [loadingComponentMixin],
+  props: {endpoint:{type: String, default: '/api/news'}},
+  template: newsScreenHtml,
+});
+
+var homeScreenComponent = {
+  template: homeScreenHtml,
+  components: {'index-screen': indexScreenComponent}
+}
+
 const routes = [
+  {
+    name: "home",
+    path: "/home",
+    component: homeScreenComponent
+  },
   {
     name: "projectsIndex",
     path: "/projects",
-    component: indexComponent,
-    props: (route) => {return {endpoint: '/api/projects',routeForSingle: 'projectDetails'}}
+    component: indexScreenComponent,
+    props: route => {
+      return { endpoint: "/api/projects", routeForSingle: "projectDetails" };
+    }
   },
   {
     name: "projectDetails",
     path: "/projects/:_id",
-    component: projectDetailsScreen,
-    props: (route) => {return  {endpoint: '/api/projects' + route.params_id}}
+    component: projectDetailsScreenComponent,
+    props: route => {
+      return { endpoint: "/api/projects/" + route.params._id };
+    }
   },
   {
     name: "membersIndex",
     path: "/members",
-    component: indexComponent,
-    props: function(){return {endpoint: '/api/projects' , routeForSingle: 'projectDetails'}}
+    component: indexScreenComponent,
+    props: function() {
+      return { endpoint: "/api/projects", routeForSingle: "projectDetails" };
+    }
   }
 ];
 

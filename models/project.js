@@ -7,7 +7,7 @@ module.exports = mongoose.model(
       //below here the fields specific to the project schema are defined.
       {
         _id: String,
-        name: String,
+        title: String,
         description: String,
         youtubeEmbed: String,
         imgUrls: [String],

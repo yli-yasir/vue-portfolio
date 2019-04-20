@@ -46,35 +46,38 @@ const loadingComponentHtml = (contentHtml) => {
 
 <!-- cards for each project will be rendered in here -->
 
-<template v-if="success">
+<template v-else-if="success">
 ${contentHtml}
 </template>
 
-  <error-indicator v-if="error"></error-indicator>
+  <error-indicator v-else></error-indicator>
 
   </div>
    `
 };
 
-const indexComponentHtml = loadingComponentHtml(`<card 
+const indexScreenHtml = loadingComponentHtml(`
+<div class="index-screen">
+<card 
   v-for="item in response" 
   :thumbnail-url="item.thumbnailUrl"
   :short-description="item.shortDescription"
-  :name="item.name"
+  :title="item.title"
   :key="item._id"
   :url="{name: routeForSingle , params: { _id : item._id } }"
   >
-  </card>`);
+  </card>
+  </div>`);
 
 const cardHtml = `
 
-<div class="card m-4 rounded bg-dark shadow" style="width: 18rem;">
+<div class="card m-4 border rounded bg-dark shadow" style="width: 18rem;">
   
 <img :src="thumbnailUrl" class="card-img-top rounded-top p-1" alt="thumbnail">
 
 <div class="card-body">
 
-  <h5 class="card-title">{{name}}</h5>
+  <h5 class="card-title">{{title}}</h5>
 
   <p class="card-text">
   {{shortDescription}}
@@ -141,9 +144,8 @@ const carouselHtml= `
 
 
 const projectDetailsScreenHtml = loadingComponentHtml(`
-<div class="container-fluid">
+<div class="row">
     <!-- First column for ad content-->
-    <div class="row">
       <div class="col-sm" style="background-color:white;color:black">
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque
@@ -172,4 +174,33 @@ const projectDetailsScreenHtml = loadingComponentHtml(`
       </div>
     </div>
     <!-- the closing div tag above is for the ending of the row-->
-  </div>`);
+  `);
+
+
+  const newsScreenHtml = loadingComponentHtml(`
+  <div class="container border shadow news-container bg-dark rounded" 
+  v-for="news in response"
+  :key="news._id">
+
+  <p>{{news.date}}</p>
+  <p>{{news.title}}</p>
+  <p>{{news.description}}</p>
+
+  </div>`)
+
+ 
+const homeScreenHtml =
+    `<div class="row align-items-start justify-content-center">
+      <div class="col-sm-7 border">
+      <news-screen></news-screen>
+      </div>
+      <div class="col-sm border">
+      <index-screen
+      endpoint="/api/projects"
+      route-for-single="projectDetails">
+      </index-screen>
+      </div>
+      </div>
+    `
+
+    

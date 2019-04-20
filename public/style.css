@@ -15,12 +15,14 @@ html, body, #app {
   background-size: auto calc(100vh - 200px);
   height: 100%;
   padding-top: 70px;
+}
+
+.index-screen{
   display: flex;
   justify-content: space-evenly;
   align-items: baseline;
   flex-flow: row wrap;
 }
-
 
 :root {
   --pen-stroke: #181a1f;
