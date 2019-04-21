@@ -4,7 +4,9 @@ html, body, #app {
   font-family: 'Press Start 2P', cursive;
 }
 
-  
+  p{
+    word-wrap: break-word;
+  }
 .content {
   background-image: url(#);
   background-position: center top 55px;
@@ -31,25 +33,22 @@ html, body, #app {
   color: var(--teal)!important;
 }
 
-.spinner-container{
-  height:100%;
-  width:100%;
-  position:relative;
+
+.loading-indicator::after{
+  content: 'Loading  ^o^';
+  display: block;
+  animation: loading;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  padding-top:20px;
+  padding-left:20px;
 }
 
-.spinner{
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+@keyframes loading {
+  25% {content: "Loading >.>"}
+  50% {content: "Loading <.<"}
+  75% {content: "Loading v.v"}
 }
-
-.spinner-border{
-  height:8rem;
-  width:8rem;
-  color: var(--teal)!important;
-}
-
 
 .bg-dark {
   background-color: #21252b !important;
@@ -85,12 +84,6 @@ html, body, #app {
   text-align: center;
 }
 
-.aspect-ratio-16by9 {
-  background-color: orange;
-  padding-top: 56.25%;
-  height: 0;
-  position: relative;
-}
 
 .aspect-ratio-child {
   position: absolute;

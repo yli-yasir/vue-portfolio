@@ -3,16 +3,6 @@ const navbar = Vue.component("navbar", {
   template: navbarHtml
 });
 
-//Progress indicator component
-const progressIndicator = Vue.component("progress-indicator", {
-  template: progressIndicatorHtml
-});
-
-//Error indicator component
-const errorIndicator = Vue.component("error-indicator", {
-  template: errorIndicatorHtml
-});
-
 //Card component
 var card = Vue.component("card", {
   props: ["thumbnailUrl", "shortDescription", "title", "url"],

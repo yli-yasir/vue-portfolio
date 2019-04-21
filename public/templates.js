@@ -1,6 +1,7 @@
 const navbarHtml = ` 
-<!--navbar--------------------------------------------------->
+<!--navbar-->
 <nav class="navbar shadow rounded-bottom justify-content-center navbar-expand-sm navbar-dark bg-dark fixed-top">
+
   <!--toggler-->
   <button class="navbar-toggler mb-1" type="button" data-toggle="collapse" data-target="#navContainer" aria-controls="navContainer" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
@@ -14,51 +15,64 @@ const navbarHtml = `
       <router-link class="nav-item nav-link" to="/home">Home</router-link>
       <router-link class="nav-item nav-link" :to="{name: 'projectsIndex'}">Projects</router-link>
       <router-link class="nav-item nav-link" to="/members">Members</router-link>
-
     </div>
     <!--end of nav-->
 
   </div>
   <!--end of nav container-->
 
-</nav>`;
-
-const progressIndicatorHtml = `
-<div class="spinner-container">
-<div class="spinner">
-<!--progress indicator-->
-<div class="spinner-border" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
-</div>
-</div>`;
-
-const errorIndicatorHtml = `
-<div>
-</div>
+</nav>
+<!--end of navbar-->
 `;
 
-const loadingComponentHtml = (contentHtml) => {
+const loadingComponentHtml = (classes,contentHtml) => {
   return `
-  <div class="h-100">
+  <div class="${classes}">
 
 <!-- progress indicator -->
+<div v-if="loading" class="loading-indicator"></div>
 
-<progress-indicator v-if="loading"></progress-indicator>
-
-<!-- cards for each project will be rendered in here -->
-
-<div v-else-if="success">
+<template v-else-if="success">
 ${contentHtml}
-</div>
+</template>
 
-  <error-indicator v-else></error-indicator>
+  <!--error indicator-->
+  <div v-else>error</div>
 
   </div>
    `
 };
 
-const indexScreenHtml = loadingComponentHtml(`
+
+const homeScreenHtml =
+    `<div class="container-fluid">
+    <div class="row align-items-start justify-content-center">
+      <div class="col-md-7 rounded">
+      <h5 class="mt-2">Latest News:</h5>
+      <news-screen></news-screen>
+      </div>
+      <div class="col-md">
+      <h5 class="mt-2"><em>Latest Projects:</em></h5>
+      <index-screen
+      endpoint="/api/projects"
+      route-for-single="projectDetails">
+      </index-screen>
+      </div>
+      </div>
+      </div>
+    `
+    const newsScreenHtml = loadingComponentHtml('',`
+    <div class="my-3 p-3 shadow news-container bg-dark rounded d-inline-block"
+    v-for="news in response"
+    :key="news._id">
+  
+    <p>{{news.date}}</p>
+    <p>{{news.title}}</p>
+    <p>{{news.description}}</p>
+  
+    </div>`);
+
+const indexScreenHtml = loadingComponentHtml('container-fluid',`
 <div class="index-screen">
 <card 
   v-for="item in response" 
@@ -71,8 +85,26 @@ const indexScreenHtml = loadingComponentHtml(`
   </card>
   </div>`);
 
-const cardHtml = `
+  const projectDetailsScreenHtml = loadingComponentHtml('container-fluid',`
+      <div class="row">
 
+      <div class="col-md-2"></div>
+
+      <div class="col-md">
+      <youtube-embed :embed-url="response.youtubeEmbed"></youtube-embed>
+      <carousel :img-urls="response.imgUrls"></carousel>
+      <p>{{response.description}}</p>
+      <p v-for="item in response.links">{{item.label}} : {{item.url}}</p>
+      </div>
+
+      <div class="col-md-2"></div>
+
+      </div>
+  `);
+
+  const newItemFormHtml=''
+
+const cardHtml = `
 <div class="card m-3 rounded bg-dark shadow" style="width: 18rem;">
   
 <img :src="thumbnailUrl" class="card-img-top rounded-top p-1" alt="thumbnail">
@@ -96,7 +128,7 @@ const cardHtml = `
 `;
 
 const youtubeEmbedHtml = `
-<div class="aspect-ratio-16by9">
+<div class="embed-responsive embed-responsive-16by9 mb-2">
         <iframe
           class="aspect-ratio-child"
           :src="embedUrl"
@@ -108,7 +140,7 @@ const youtubeEmbedHtml = `
 `;
 
 const carouselHtml= `
-<div class="aspect-ratio-16by9 my-4">
+<div class="embed-responsive embed-responsive-16by9 mb-2">
   
   <div
     id="carouselControls"
@@ -143,77 +175,3 @@ const carouselHtml= `
     </a>
   </div>
 </div>`;
-
-
-const projectDetailsScreenHtml = loadingComponentHtml(`
-<div class="contaianer-fluid">
-<div class="row">
-    <!-- First column for ad content-->
-      <div class="col-sm" style="background-color:white;color:black">
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque
-          delectus id tempora cum. Nobis, provident quibusdam rerum culpa minus
-          ut perspiciatis? Voluptatum aperiam explicabo sapiente accusantium
-          pariatur consequatur iusto incidunt.
-        </p>
-      </div>
-
-      <!-- this column is for true content-->
-      <div class="col-sm-7 true-content">
-      <youtube-embed :embed-url="response.youtubeEmbed"></youtube-embed>
-      <carousel :img-urls="response.imgUrls"></carousel>
-      <p>{{response.description}}</p>
-      <p v-for='link in response.links'>{{link.label}} : {{link.url}}</p>
-      </div>
-
-      <!-- the 3rd column is also for ads-->
-      <div class="col-sm" style="background-color:white;color:black">
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque
-          delectus id tempora cum. Nobis, provident quibusdam rerum culpa minus
-          ut perspiciatis? Voluptatum aperiam explicabo sapiente accusantium
-          pariatur consequatur iusto incidunt.
-        </p>
-      </div>
-    </div>
-    <!-- the closing div tag above is for the ending of the row-->
-    </div>
-  `);
-
-
-  const newsScreenHtml = loadingComponentHtml(`
-  <div class="my-3 p-3 shadow news-container bg-dark rounded d-inline-block"
-  v-for="news in response"
-  :key="news._id">
-
-  <p>{{news.date}}</p>
-  <p>{{news.title}}</p>
-  <p>{{news.description}}</p>
-
-  </div>`)
-
- 
-const homeScreenHtml =
-    `<div class="container-fluid">
-    <div class="row align-items-start h-100 justify-content-center">
-      <div class="col-sm-7 rounded h-50" style="margin-bottom:200px">
-      <h5 class="mt-2">Latest News:</h5>
-      <news-screen></news-screen>
-      </div>
-      <div class="col-sm h-50">
-      <h5 class="mt-2"><em>Latest Projects:</em></h5>
-      <index-screen
-      endpoint="/api/projects"
-      route-for-single="projectDetails">
-      </index-screen>
-      </div>
-      </div>
-      </div>
-    `
-
-  const newItemFormHtml= loadingComponentHtml(`
-  <template v-for="field in response">
-  <label>{{field}}</label>
-  </template>
-  `)
-    
