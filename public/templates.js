@@ -211,4 +211,9 @@ const homeScreenHtml =
       </div>
     `
 
+  const newItemFormHtml= loadingComponentHtml(`
+  <template v-for="field in response">
+  <label>{{field}}</label>
+  </template>
+  `)
     

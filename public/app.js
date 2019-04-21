@@ -91,6 +91,11 @@ var homeScreenComponent = {
   components: {'index-screen': indexScreenComponent}
 }
 
+var newItemFormComponent = {
+  mixins:[loadingComponentMixin],
+  template:newItemFormHtml
+}
+
 const routes = [
   {
     name: "home",
@@ -106,6 +111,14 @@ const routes = [
     }
   },
   {
+    name: "newProject",
+    path: "/projects/new",
+    component: newItemFormComponent,
+    props: function() {
+      return { endpoint: "/api/projects/new"};
+    }
+  },
+  {
     name: "projectDetails",
     path: "/projects/:_id",
     component: projectDetailsScreenComponent,
@@ -113,6 +126,7 @@ const routes = [
       return { endpoint: "/api/projects/" + route.params._id };
     }
   },
+
   {
     name: "membersIndex",
     path: "/members",
@@ -120,10 +134,11 @@ const routes = [
     props: function() {
       return { endpoint: "/api/projects", routeForSingle: "projectDetails" };
     }
-  }
+  },  
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes: routes
 });
 

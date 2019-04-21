@@ -11,6 +11,10 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/new", async (req, res) => {
+  res.json(projectModel.schema.requiredPaths());
+});
+
 router.get("/:id", async (req, res) => {
   try{
   let result = await projectModel.findById(req.params.id).exec();
@@ -19,7 +23,6 @@ router.get("/:id", async (req, res) => {
 catch(error){
   next(error)
 }
-
 });
 
 module.exports = router;

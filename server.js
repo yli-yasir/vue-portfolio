@@ -18,15 +18,13 @@ db.once("open", () => {
 });
 //---/MONGO---
 
-
 server.use("/public", express.static("public"));
 
 //Use routers
 server.use("/api", apiRouter);
 
-server.get("/", (req, res, next) => {
+server.get("/*", (req, res, next) => {
   res.sendfile( __dirname + "/index.html")
-  
 });
 
 
