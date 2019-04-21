@@ -40,21 +40,21 @@ const errorIndicatorHtml = `
 
 const loadingComponentHtml = (contentHtml) => {
   return `
-  <template>
+  <div class="h-100">
 
 <!-- progress indicator -->
 
-<progress-indicator v-if="success"></progress-indicator>
+<progress-indicator v-if="loading"></progress-indicator>
 
 <!-- cards for each project will be rendered in here -->
 
-<template v-else-if="loading">
+<div v-else-if="success">
 ${contentHtml}
-</template>
+</div>
 
   <error-indicator v-else></error-indicator>
 
-  </template>
+  </div>
    `
 };
 
@@ -73,7 +73,7 @@ const indexScreenHtml = loadingComponentHtml(`
 
 const cardHtml = `
 
-<div class="card m-4 border rounded bg-dark shadow" style="width: 18rem;">
+<div class="card m-3 rounded bg-dark shadow" style="width: 18rem;">
   
 <img :src="thumbnailUrl" class="card-img-top rounded-top p-1" alt="thumbnail">
 
@@ -182,7 +182,7 @@ const projectDetailsScreenHtml = loadingComponentHtml(`
 
 
   const newsScreenHtml = loadingComponentHtml(`
-  <div class="container border shadow news-container bg-dark rounded" 
+  <div class="my-3 p-3 shadow news-container bg-dark rounded d-inline-block"
   v-for="news in response"
   :key="news._id">
 
@@ -195,11 +195,13 @@ const projectDetailsScreenHtml = loadingComponentHtml(`
  
 const homeScreenHtml =
     `<div class="container-fluid">
-    <div class="row h-100 align-items-start justify-content-center">
-      <div class="col-sm-7 h-100 border">
+    <div class="row align-items-start h-100 justify-content-center">
+      <div class="col-sm-7 rounded h-50" style="margin-bottom:200px">
+      <h5 class="mt-2">Latest News:</h5>
       <news-screen></news-screen>
       </div>
-      <div class="col-sm h-100 border">
+      <div class="col-sm h-50">
+      <h5 class="mt-2"><em>Latest Projects:</em></h5>
       <index-screen
       endpoint="/api/projects"
       route-for-single="projectDetails">

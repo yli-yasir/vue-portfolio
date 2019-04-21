@@ -3,9 +3,6 @@ html, body, #app {
   color:white;
 }
 
-.navbar{
-  height:50px;
-  }
   
 .content {
   background-image: url(#);
@@ -23,6 +20,7 @@ html, body, #app {
   align-items: baseline;
   flex-flow: row wrap;
 }
+
 
 :root {
   --pen-stroke: #181a1f;
