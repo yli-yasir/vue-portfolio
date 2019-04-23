@@ -25,15 +25,14 @@ const navbarHtml = `
 <!--end of navbar-->
 `;
 
-const loadingComponentHtml = (classes,contentHtml) => {
-  return `
-  <div class="${classes}">
+const loadingScreenHtml = `
+  <div>
 
 <!-- progress indicator -->
 <div v-if="loading" class="loading-indicator"></div>
 
 <template v-else-if="success">
-${contentHtml}
+<slot :response="response"></slot>
 </template>
 
   <!--error indicator-->
@@ -41,13 +40,12 @@ ${contentHtml}
 
   </div>
    `
-};
-
 
 const homeScreenHtml =
-    `<div class="container-fluid">
-    <div class="row align-items-start justify-content-center">
-      <div class="col-md-7 rounded">
+    `
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-7">
       <h5 class="mt-2">Latest News:</h5>
       <news-screen></news-screen>
       </div>
@@ -61,21 +59,28 @@ const homeScreenHtml =
       </div>
       </div>
     `
-    const newsScreenHtml = loadingComponentHtml('',`
+    const newsScreenHtml = `
+    <loading-screen endpoint="/api/news">
+    <template v-slot:default="slotProps">
     <div class="my-3 p-3 shadow news-container bg-dark rounded d-inline-block"
-    v-for="news in response"
+    v-for="news in slotProps.response"
     :key="news._id">
   
     <p>{{news.date}}</p>
     <p>{{news.title}}</p>
     <p>{{news.description}}</p>
   
-    </div>`);
+    </div>
+    </template>
+    </loading-screen>`
+    ;
 
-const indexScreenHtml = loadingComponentHtml('container-fluid',`
+const indexScreenHtml = `
+<loading-screen class="container-fluid" :endpoint="endpoint">
+<template v-slot:default="slotProps">
 <div class="index-screen">
 <card 
-  v-for="item in response" 
+  v-for="item in slotProps.response" 
   :thumbnail-url="item.thumbnailUrl"
   :short-description="item.shortDescription"
   :title="item.title"
@@ -83,24 +88,29 @@ const indexScreenHtml = loadingComponentHtml('container-fluid',`
   :url="{name: routeForSingle , params: { _id : item._id } }"
   >
   </card>
-  </div>`);
+  </div>
+  </template>
+  </loading-screen>`;
 
-  const projectDetailsScreenHtml = loadingComponentHtml('container-fluid',`
+
+  const projectDetailsScreenHtml =`
+  <loading-screen class="container-fluid" :endpoint="endpoint">
+      <template v-slot:default="slotProps">
       <div class="row">
-
-      <div class="col-md-2"></div>
-
+      <div class="col-md-2" style="background-color:green"></div>
       <div class="col-md">
-      <youtube-embed :embed-url="response.youtubeEmbed"></youtube-embed>
-      <carousel :img-urls="response.imgUrls"></carousel>
-      <p>{{response.description}}</p>
-      <p v-for="item in response.links">{{item.label}} : {{item.url}}</p>
+      <youtube-embed :embed-url="slotProps.response.youtubeEmbed"></youtube-embed>
+      <carousel :img-urls="slotProps.response.imgUrls"></carousel>
+      <p>{{slotProps.response.description}}</p>
+      <p v-for="item in slotProps.response.links">{{item.label}} : {{item.url}}</p>
       </div>
 
-      <div class="col-md-2"></div>
+      <div class="col-md-2" style="background-color:green"></div>
 
       </div>
-  `);
+      </template>
+      </loading-screen>
+  `;
 
   const newItemFormHtml=''
 

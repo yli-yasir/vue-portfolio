@@ -1,12 +1,13 @@
 //Navbar Component
-const navbar = Vue.component("navbar", {
+var navbar = Vue.component("navbar", {
   template: navbarHtml
 });
 
 //Card component
 var card = Vue.component("card", {
   props: ["thumbnailUrl", "shortDescription", "title", "url"],
-  template: cardHtml
+  template: cardHtml,
+
 });
 
 //Youtube embed component
@@ -22,7 +23,8 @@ var carousel = Vue.component("carousel", {
 });
 
 //Generic Component that loads data...
-const loadingComponentMixin = {
+var loadingScreenComponent = Vue.component('loading-screen',{
+  template:loadingScreenHtml,
   props: ["endpoint"],
   data: function() {
     return {
@@ -35,7 +37,6 @@ const loadingComponentMixin = {
           console.log('making AJAX request to ' + this.endpoint)
           let response = await axios.get(this.endpoint);
           this.response = response.data;
-          console.log(this.response.length)
           this.success = true;
           this.loading = false;
         } catch (err) {
@@ -54,35 +55,29 @@ const loadingComponentMixin = {
       this.load();
     }
   }
-};
-
-const indexScreenComponent = {
-  mixins: [loadingComponentMixin],
-  props: ["routeForSingle"],
-  template: indexScreenHtml
-};
-
-//Project details screen component
-var projectDetailsScreenComponent = {
-  mixins: [loadingComponentMixin],
-  template: projectDetailsScreenHtml
-};
-
-
-
-var newsScreenComponent= Vue.component('news-screen',{
-  mixins: [loadingComponentMixin],
-  props: {endpoint:{type: String, default: '/api/news'}},
-  template: newsScreenHtml,
 });
+
 
 var homeScreenComponent = {
   template: homeScreenHtml,
-  components: {'index-screen': indexScreenComponent}
-}
+};
+
+var newsScreenComponent= Vue.component('news-screen',{
+  template: newsScreenHtml,
+});
+
+var indexScreenComponent = Vue.component('index-screen',{
+  props: ["endpoint","routeForSingle"],
+  template: indexScreenHtml
+});
+
+//Project details screen component
+var projectDetailsScreenComponent = {
+  props: ["endpoint"],
+  template: projectDetailsScreenHtml
+};
 
 var newItemFormComponent = {
-  mixins:[loadingComponentMixin],
   template:newItemFormHtml
 }
 
