@@ -77,9 +77,7 @@ var projectDetailsScreenComponent = {
   template: projectDetailsScreenHtml
 };
 
-var newItemFormComponent = {
-  template:newItemFormHtml
-}
+var memberDetailsScreenComponent= {}
 
 const routes = [
   {
@@ -96,14 +94,6 @@ const routes = [
     }
   },
   {
-    name: "newProject",
-    path: "/projects/new",
-    component: newItemFormComponent,
-    props: function() {
-      return { endpoint: "/api/projects/new"};
-    }
-  },
-  {
     name: "projectDetails",
     path: "/projects/:_id",
     component: projectDetailsScreenComponent,
@@ -111,15 +101,22 @@ const routes = [
       return { endpoint: "/api/projects/" + route.params._id };
     }
   },
-
   {
     name: "membersIndex",
     path: "/members",
     component: indexScreenComponent,
     props: function() {
-      return { endpoint: "/api/projects", routeForSingle: "projectDetails" };
+      return { endpoint: "/api/members", routeForSingle: "memberDetails" };
     }
   },  
+  {
+    name: "memberDetails",
+    path: "/members/:_id",
+    component: memberDetailsScreenComponent,
+    props: function() {
+      return { endpoint: "/api/members", routeForSingle: "memberDetails" };
+    }
+  }
 ];
 
 const router = new VueRouter({

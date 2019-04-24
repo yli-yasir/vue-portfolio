@@ -4,6 +4,5 @@
 module.exports = {
     title: String,
     thumbnailUrl: String,
-    shortDescription: String,
-    
+    shortDescription: String
 };

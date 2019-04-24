@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Project = require("../models/project")
 const News = require('../models/news')
+const Member = require('../models/member')
 
 mongoose.connection.dropCollection('projects',(err) => {
   if (err){
@@ -61,3 +62,28 @@ mongoose.connection.dropCollection('news',(err) => {
 });
 
 
+mongoose.connection.dropCollection('members',(err) => {
+  if (err){
+    console.log('failed to drop projects collection');
+  }
+  else{
+    console.log('projects collection dropped...')
+  }
+      
+new Member({
+  _id: "yasir-albaldawi",
+  title:"Yasir Al-Baldawi",
+  thumbnailUrl: "https://i.imgur.com/lFpx8Zv.gif@2x.png",
+  shortDescription: "founding member of the group...",
+  description: "Programmer.... loves to write...",
+}).save(function(error){if (!error){console.log("saved a dummy member")}});
+
+
+new Member({
+  _id: "alice-smith",
+  title:"Alice Smith",
+  thumbnailUrl: "https://i.imgur.com/sUGpuiw.jpg",
+  shortDescription: "a member of the group...",
+  description: "graphics designer.... loves to draw...",
+}).save(function(error){if (!error){console.log("saved a dummy member")}});
+});
