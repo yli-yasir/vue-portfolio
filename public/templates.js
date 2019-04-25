@@ -115,20 +115,19 @@ const indexScreenHtml = `
   const newItemFormHtml=''
 
 const cardHtml = `
-<div class="card m-3 rounded bg-dark shadow" style="width: 18rem;">
+<div class="card m-3 rounded bg-dark shadow">
   
 <img :src="thumbnailUrl" class="card-img-top rounded-top p-1" alt="thumbnail">
 
 <div class="card-body">
 
+  <div class="card-text">
   <h5 class="card-title">{{title}}</h5>
-
-  <p class="card-text">
-  {{shortDescription}}
-  </p>
+  <p>{{shortDescription}}</p>
+  </div>
 
   <router-link :to="url"
-    class="btn btn-success rounded">
+    class="btn card-btn btn-success rounded">
     More Details
   </router-link>
 
