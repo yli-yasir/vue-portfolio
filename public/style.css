@@ -19,10 +19,19 @@ html, body, #app {
 }
 
 .index-screen{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-evenly;
-  align-items: baseline;
-  flex-flow: row wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
 }
 
 
@@ -38,11 +47,20 @@ html, body, #app {
 .loading-indicator::after{
   content: 'Loading  ^o^';
   display: block;
-  animation: loading;
-  animation-duration: 4s;
-  animation-iteration-count: infinite;
+  -webkit-animation: loading;
+          animation: loading;
+  -webkit-animation-duration: 4s;
+          animation-duration: 4s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
   padding-top:20px;
   padding-left:20px;
+}
+
+@-webkit-keyframes loading {
+  25% {content: "Loading >.>"}
+  50% {content: "Loading <.<"}
+  75% {content: "Loading v.v"}
 }
 
 @keyframes loading {
@@ -99,6 +117,12 @@ html, body, #app {
 
 .navbar-nav {
   text-align: center;
+}
+
+.btn-teal{
+  color: #fff;
+  background-color: var(--teal);
+  border-color: var(--teal);
 }
 
 

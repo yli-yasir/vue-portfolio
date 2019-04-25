@@ -1,28 +1,26 @@
 //Navbar Component
-var navbar = Vue.component("navbar", {
+var navbarComponent = Vue.component("navbar", {
   template: navbarHtml
 });
 
 //Card component
-var card = Vue.component("card", {
+var cardComponent = Vue.component("card", {
   props: ["thumbnailUrl", "shortDescription", "title", "url"],
   template: cardHtml,
 
 });
 
 //Youtube embed component
-var youtubeEmbed = Vue.component("youtube-embed", {
+var youtubeEmbedComponent = Vue.component("youtube-embed", {
   props: ["embedUrl"],
   template: youtubeEmbedHtml
 });
 
-//Carousel component
-var carousel = Vue.component("carousel", {
+var carouselComponent = Vue.component("carousel", {
   props: ["imgUrls"],
   template: carouselHtml
 });
 
-//Generic Component that loads data...
 var loadingScreenComponent = Vue.component('loading-screen',{
   template:loadingScreenHtml,
   props: ["endpoint"],
@@ -77,7 +75,11 @@ var projectDetailsScreenComponent = {
   template: projectDetailsScreenHtml
 };
 
-var memberDetailsScreenComponent= {}
+var memberDetailsScreenComponent= {
+  props:["endpoint"],
+  template:memberDetailsScreenHtml
+}
+
 
 const routes = [
   {
@@ -113,8 +115,8 @@ const routes = [
     name: "memberDetails",
     path: "/members/:_id",
     component: memberDetailsScreenComponent,
-    props: function() {
-      return { endpoint: "/api/members", routeForSingle: "memberDetails" };
+    props: route=> {
+      return { endpoint: "/api/members/" + route.params._id, routeForSingle: "memberDetails" };
     }
   }
 ];

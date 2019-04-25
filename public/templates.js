@@ -97,7 +97,7 @@ const indexScreenHtml = `
   <loading-screen class="container-fluid" :endpoint="endpoint">
       <template v-slot:default="slotProps">
       <div class="row">
-      <div class="col-md-2" style="background-color:green"></div>
+      <div class="col-md-2"></div>
       <div class="col-md">
       <youtube-embed :embed-url="slotProps.response.youtubeEmbed"></youtube-embed>
       <carousel :img-urls="slotProps.response.imgUrls"></carousel>
@@ -105,8 +105,26 @@ const indexScreenHtml = `
       <p v-for="item in slotProps.response.links">{{item.label}} : {{item.url}}</p>
       </div>
 
-      <div class="col-md-2" style="background-color:green"></div>
+      <div class="col-md-2"></div>
 
+      </div>
+      </template>
+      </loading-screen>
+  `;
+
+
+
+  const memberDetailsScreenHtml =`
+  <loading-screen class="container-fluid" :endpoint="endpoint">
+      <template v-slot:default="slotProps">
+      <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md">
+      <div>
+      <h4>{{slotProps.response.title}}</h4>
+      <p>{{slotProps.response.description}}</p>
+      </div>
+      <div class="col-md-2"></div>
       </div>
       </template>
       </loading-screen>
