@@ -3,6 +3,12 @@ const Project = require("../models/project")
 const News = require('../models/news')
 const Member = require('../models/member')
 
+var catModel=  mongoose.model('cat', new mongoose.Schema({
+ name: String,
+ age: Number 
+}))
+
+
 mongoose.connection.dropCollection('projects',(err) => {
   if (err){
     console.log('failed to drop projects collection');

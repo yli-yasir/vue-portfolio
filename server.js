@@ -1,6 +1,7 @@
 const express = require("express");
 const server = express();
 const apiRouter = require("./routers/api/main");
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
 //---MONGO---
@@ -18,6 +19,9 @@ db.once("open", () => {
 });
 //---/MONGO---
 
+
+server.use(bodyParser.urlencoded({ extended: true }));
+
 server.use("/public", express.static("public"));
 
 //Use routers
@@ -27,5 +31,6 @@ server.get("/*", (req, res, next) => {
   res.sendfile( __dirname + "/index.html")
 });
 
+var port = process.env.PORT || 5000;
 
-server.listen(5000, () => console.log("The server has started!"));
+server.listen(port, () => console.log(`the server has started on port: ${port}`));

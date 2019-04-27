@@ -11,9 +11,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/new", async (req, res) => {
-  res.json(projectModel.schema.requiredPaths());
-});
+router.post("/", async (req, res) => {
+
+}
+);
 
 router.get("/:id", async (req, res) => {
   try{
@@ -24,5 +25,6 @@ catch(error){
   next(error)
 }
 });
+
 
 module.exports = router;

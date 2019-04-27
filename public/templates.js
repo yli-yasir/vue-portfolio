@@ -130,7 +130,24 @@ const indexScreenHtml = `
       </loading-screen>
   `;
 
-  const newItemFormHtml=''
+  const newProjectFormHtml=`
+  <form method="post" action="/api/projects">
+
+  <div class="form-group">
+    <label for="projectidinput">Project _id:</label>
+    <input type="text" name="_id" class="form-control" id="projectidinput" aria-describedby="projectidhelp" placeholder="Enter id">
+    <small id="emailHelp" class="form-text text-muted">Unique, no spaces, will be used as path in URL.</small>
+  </div>
+
+  <div class="form-group">
+    <label for="thumbnailurlinput">Thumbnail URL:</label>
+    <input name="thumbnailurl" type="text" class="form-control" id="thumbnailurlinput" placeholder="enter URL to thumbnail">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+  `
 
 const cardHtml = `
 <div class="card m-3 rounded bg-dark shadow">

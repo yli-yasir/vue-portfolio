@@ -80,7 +80,9 @@ var memberDetailsScreenComponent= {
   template:memberDetailsScreenHtml
 }
 
-
+var newProjectFormComponent={
+  template: newProjectFormHtml
+}
 const routes = [
   {
     name: "home",
@@ -94,6 +96,11 @@ const routes = [
     props: route => {
       return { endpoint: "/api/projects", routeForSingle: "projectDetails" };
     }
+  },
+  {
+    name: "newProject",
+    path: "/projects/new",
+    component: newProjectFormComponent
   },
   {
     name: "projectDetails",
