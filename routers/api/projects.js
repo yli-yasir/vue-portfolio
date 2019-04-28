@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const projectModel = require("../../models/project");
 
+
+console.log(projectModel.schema.obj)
 router.get("/", async (req, res) => {
   try {
     let result = await projectModel.find({}).exec();
@@ -12,9 +14,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-
+  console.log(req.body)
+  res.redirect('/projects/new');
 }
 );
+
+
 
 router.get("/:id", async (req, res) => {
   try{

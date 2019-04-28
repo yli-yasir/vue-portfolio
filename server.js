@@ -28,7 +28,7 @@ server.use("/public", express.static("public"));
 server.use("/api", apiRouter);
 
 server.get("/*", (req, res, next) => {
-  res.sendfile( __dirname + "/index.html")
+  res.sendFile( __dirname + "/index.html")
 });
 
 var port = process.env.PORT || 5000;

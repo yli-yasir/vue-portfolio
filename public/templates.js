@@ -1,6 +1,6 @@
 const navbarHtml = ` 
 <!--navbar-->
-<nav class="navbar shadow rounded-bottom justify-content-center navbar-expand-sm navbar-dark bg-dark fixed-top">
+<nav class="navbar d-print shadow rounded-bottom justify-content-center navbar-expand-sm navbar-dark bg-dark fixed-top">
 
   <!--toggler-->
   <button class="navbar-toggler mb-1" type="button" data-toggle="collapse" data-target="#navContainer" aria-controls="navContainer" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,9 +12,9 @@ const navbarHtml = `
 
     <!--nav-->
     <div class="navbar-nav ml-sm-4">
-      <router-link class="nav-item nav-link" to="/home">Home</router-link>
-      <router-link class="nav-item nav-link" :to="{name: 'projectsIndex'}">Projects</router-link>
-      <router-link class="nav-item nav-link" to="/members">Members</router-link>
+      <router-link data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item nav-link" to="/home">Home</router-link>
+      <router-link data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item nav-link" :to="{name: 'projectsIndex'}">Projects</router-link>
+      <router-link data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item nav-link" to="/members">Members</router-link>
     </div>
     <!--end of nav-->
 
@@ -134,17 +134,25 @@ const indexScreenHtml = `
   <form method="post" action="/api/projects">
 
   <div class="form-group">
-    <label for="projectidinput">Project _id:</label>
-    <input type="text" name="_id" class="form-control" id="projectidinput" aria-describedby="projectidhelp" placeholder="Enter id">
-    <small id="emailHelp" class="form-text text-muted">Unique, no spaces, will be used as path in URL.</small>
+    <label for="projectpathinput">Project path:</label>
+    <input type="text" name="path" class="form-control" id="projectidinput" aria-describedby="projectpathhelp" placeholder="Enter path">
+    <small id="emailHelp" class="form-text text-muted">Unique, no spaces.</small>
   </div>
 
   <div class="form-group">
     <label for="thumbnailurlinput">Thumbnail URL:</label>
-    <input name="thumbnailurl" type="text" class="form-control" id="thumbnailurlinput" placeholder="enter URL to thumbnail">
+    <input name="_id" type="text" class="form-control" id="thumbnailurlinput" placeholder="enter URL to thumbnail">
   </div>
 
+  <ul name="urls">
+  <li>hey</li></ul>
   <button type="submit" class="btn btn-primary">Submit</button>
+  <select name="cars" size="4" multiple>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="fiat">Fiat</option>
+  <option value="audi">Audi</option>
+</select>
 
 </form>
   `

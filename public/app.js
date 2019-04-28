@@ -84,6 +84,8 @@ var newProjectFormComponent={
   template: newProjectFormHtml
 }
 const routes = [
+  {path:"/",
+redirect:"/home"},
   {
     name: "home",
     path: "/home",
