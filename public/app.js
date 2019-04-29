@@ -81,6 +81,13 @@ var memberDetailsScreenComponent= {
 }
 
 var newProjectFormComponent={
+  data: function(){
+    return {
+      imgUrls : 1 ,
+      links: 1,
+      contributors: 1
+    }
+  },
   template: newProjectFormHtml
 }
 const routes = [

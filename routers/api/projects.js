@@ -3,7 +3,6 @@ const router = express.Router();
 const projectModel = require("../../models/project");
 
 
-console.log(projectModel.schema.obj)
 router.get("/", async (req, res) => {
   try {
     let result = await projectModel.find({}).exec();

@@ -131,28 +131,100 @@ const indexScreenHtml = `
   `;
 
   const newProjectFormHtml=`
-  <form method="post" action="/api/projects">
+  <form class="container" method="post" action="/api/projects">
 
   <div class="form-group">
-    <label for="projectpathinput">Project path:</label>
-    <input type="text" name="path" class="form-control" id="projectidinput" aria-describedby="projectpathhelp" placeholder="Enter path">
-    <small id="emailHelp" class="form-text text-muted">Unique, no spaces.</small>
+    <label for="pathinput">Path:</label>
+    <input type="text" name="path" class="form-control" id="pathinput" aria-describedby="pathhelp" placeholder="red-leaf-app">
+    <small id="pathhelp" class="form-text text-muted">Unique, no spaces or underscores.</small>
   </div>
 
   <div class="form-group">
-    <label for="thumbnailurlinput">Thumbnail URL:</label>
-    <input name="_id" type="text" class="form-control" id="thumbnailurlinput" placeholder="enter URL to thumbnail">
+    <label for="nameinput">Name:</label>
+    <input type="text" name="name" class="form-control" id="nameinput" aria-describedby="namehelp" placeholder="Red Leaf">
+    <small id="namehelp" class="form-text text-muted">Preferably unique, can contain any character.</small>
   </div>
 
-  <ul name="urls">
-  <li>hey</li></ul>
+
+  <div class="form-group">
+  <label for="thumbnailurlinput">Thumbnail URL:</label>
+  <input type="text" name="thumbnailurl" class="form-control" id="thumbnailurlinput" aria-describedby="thumbnailurlhelp" placeholder="https://exampleimghosting/xyz.png">
+  <small id="thumbnailurlhelp" class="form-text text-muted">URL to thumbnail image that will be shown in the project card at the index screen.</small>
+</div>
+
+
+<div class="form-group">
+<label for="shortdescriptioninput">Short description:</label>
+<input type="text" name="shortdescription" class="form-control" id="shortdescriptioninput" aria-describedby="shortdescriptionhelp" placeholder="Red leaves are so beautiful">
+<small id="shortdescriptionhelp" class="form-text text-muted">A short description of the project.</small>
+</div>
+
+<div class="form-group">
+<label for="descriptioninput">Description:</label>
+<input type="text" name="description" class="form-control" id="descriptioninput" aria-describedby="descriptionhelp" placeholder="Red leaves are so beautiful, they remind of autumn....">
+<small id="descriptionhelp" class="form-text text-muted">A description of the project.</small>
+</div>
+
+<div class="form-group">
+<label for="YouTubeembedURLinput">YouTube embed URL:</label>
+<input type="text" name="youtubeembedurl" class="form-control" id="YouTube embed URLinput" aria-describedby="youtubeembedurlhelp" placeholder="https://www.youtube.com/embed/lX44CAz-JhU">
+<small id="youtubeembedurlhelp" class="form-text text-muted">A YouTube embed URL of the project.</small>
+</div>
+
+<div class="form-group">
+<label for="imgurlsinput">Image URLS:</label>
+<input v-for="url in imgUrls" type="text" name="imgurls" class="form-control" id="imgurlsinput" aria-describedby="imgurlshelp" placeholder="https://exampleimghosting/xyz.png">
+<button type="button" class="btn btn-primary" @click="imgUrls++">+</button>
+<small id="imgurlshelp" class="form-text text-muted">one or more URL to images.</small>
+</div>
+
+<div class="form-group">
+<label for="linksinput">Links:</label>
+
+<div v-for="link in links" id="linksinput" aria-describedby="linkshelp">
+
+<label for="linklabelinput">Label:</label>
+<input type="text" name="linklabel" class="form-control" id="linklabelinput" placeholder="appstore">
+
+<label for="linkurlinput">URL:</label>
+<input type="text" name="linkurl" class="form-control" id="linkurlinput" placeholder="https://example.appstore/red-leaf">
+
+</div>
+
+<button type="button" class="btn btn-primary" @click="links++">+</button>
+
+<small id="linkshelp" class="form-text text-muted">A label that describes what the following URL is for.</small>
+
+
+
+</div>
+
+
+
+<div class="form-group">
+
+<label for="contributorsinput">Project contributors:</label>
+
+<div v-for="contributor in contributors" id="contributorsinput" aria-describedby="contributorshelp">
+
+<label for="nameinput">name:</label>
+<input type="text" name="contributorname" class="form-control" id="contributornameinput" placeholder="John Smith">
+
+<label for="linkurlinput">role:</label>
+<input type="text" name="contributorrole" class="form-control" id="contributorroleinput" placeholder="graphic design">
+
+</div>
+
+<button type="button" class="btn btn-primary" @click="contributors++">+</button>
+<small id="contributorshelp" class="form-text text-muted">The name for a contributor and his role.</small>
+
+
+
+</div>
+
+
+
   <button type="submit" class="btn btn-primary">Submit</button>
-  <select name="cars" size="4" multiple>
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="fiat">Fiat</option>
-  <option value="audi">Audi</option>
-</select>
 
 </form>
   `
