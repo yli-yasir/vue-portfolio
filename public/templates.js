@@ -130,101 +130,53 @@ const indexScreenHtml = `
       </loading-screen>
   `;
 
+  const formGroupHtml= `
+  <div class="form-group">
+  <label :for="inputId">{{inputLabel}}</label>
+  <input v-for="one in count" type="text" :name="inputName" class="form-control" :id="inputId" :aria-describedby="helpId" :placeholder="placeholder">
+  <button v-if="many" type="button" class="btn btn-primary" @click="count++">+</button>
+  <small :id="helpId" class="form-text text-muted">{{help}}</small>
+  </div>
+  `;
+
+  const branchedFormGroupHtml = `
+  <div class="form-group">
+  <label :for="mainId">{{mainLabel}}</label>
+  <div v-for="one in count" :id="mainId" :aria-describedby="helpId">
+  <template v-for="input in inputs">
+  <label :for="input.id">{{input.label}}</label>
+  <input  type="text" :name="input.name" class="form-control" :id="input.id" :placeholder="input.placeholder">
+  </template>
+  </div>
+  <button v-if="many" type="button" class="btn btn-primary" @click="count++">+</button>
+  <small :id="helpId" class="form-text text-muted">{{help}}</small>
+  </div>
+  `
+
+
   const newProjectFormHtml=`
+
   <form class="container" method="post" action="/api/projects">
 
-  <div class="form-group">
-    <label for="pathinput">Path:</label>
-    <input type="text" name="path" class="form-control" id="pathinput" aria-describedby="pathhelp" placeholder="red-leaf-app">
-    <small id="pathhelp" class="form-text text-muted">Unique, no spaces or underscores.</small>
-  </div>
+  <form-group input-id="pathInput" input-name="path" input-label="Path:" placeholder="red-leaf-app" help-id="pathHelp" help="Unique, no spaces or underscores."></form-group>
 
-  <div class="form-group">
-    <label for="nameinput">Name:</label>
-    <input type="text" name="name" class="form-control" id="nameinput" aria-describedby="namehelp" placeholder="Red Leaf">
-    <small id="namehelp" class="form-text text-muted">Preferably unique, can contain any character.</small>
-  </div>
+  <form-group input-id="nameInput" input-name="name" input-label="Name:" placeholder="Red Leaf" help-id="pathHelp" help="Preferably unique, can contain any character."></form-group>
 
+  <form-group input-id="thumbnailUrlInput" input-name="url" input-label="URL:" placeholder="https://exampleimghosting/xyz.png" help-id="thumbnailUrlHelp" help="URL to thumbnail image that will be shown in the project card at the index screen."></form-group>
 
-  <div class="form-group">
-  <label for="thumbnailurlinput">Thumbnail URL:</label>
-  <input type="text" name="thumbnailurl" class="form-control" id="thumbnailurlinput" aria-describedby="thumbnailurlhelp" placeholder="https://exampleimghosting/xyz.png">
-  <small id="thumbnailurlhelp" class="form-text text-muted">URL to thumbnail image that will be shown in the project card at the index screen.</small>
-</div>
+  <form-group input-id="shotDescriptionInput" input-name="shortDescription" input-label="Short description:" placeholder="Red leaves are so beautiful" help-id="shortDescriptionHelp" help="A short description of the project."></form-group>
 
+  <form-group input-id="descriptionInput" input-name="description" input-label="Description:" placeholder="Red leaves are so beautiful, they remind me of Autmn." help-id="descriptionHelp" help="A Longer description of the project."></form-group>
 
-<div class="form-group">
-<label for="shortdescriptioninput">Short description:</label>
-<input type="text" name="shortdescription" class="form-control" id="shortdescriptioninput" aria-describedby="shortdescriptionhelp" placeholder="Red leaves are so beautiful">
-<small id="shortdescriptionhelp" class="form-text text-muted">A short description of the project.</small>
-</div>
+  <form-group input-id="youtubeEmbedUrlInput" input-name="youtubeEmbedUrl" input-label="Youtube embed URL:" placeholder="https://www.youtube.com/embed/lX44CAz-JhU" help-id="youtubeEmbedHelp" help="A YouTube embed URL of the project."></form-group>
 
-<div class="form-group">
-<label for="descriptioninput">Description:</label>
-<input type="text" name="description" class="form-control" id="descriptioninput" aria-describedby="descriptionhelp" placeholder="Red leaves are so beautiful, they remind of autumn....">
-<small id="descriptionhelp" class="form-text text-muted">A description of the project.</small>
-</div>
+  <form-group :many="true" input-id="imgUrlsInput" input-name="imgUrls" input-label="Image URLs:" placeholder="https://exampleimghosting/xyz.png" help-id="imgUrlsHelp" help="one or more URLs to images."></form-group>
 
-<div class="form-group">
-<label for="YouTubeembedURLinput">YouTube embed URL:</label>
-<input type="text" name="youtubeembedurl" class="form-control" id="YouTube embed URLinput" aria-describedby="youtubeembedurlhelp" placeholder="https://www.youtube.com/embed/lX44CAz-JhU">
-<small id="youtubeembedurlhelp" class="form-text text-muted">A YouTube embed URL of the project.</small>
-</div>
+  <branched-form-group :many="true" :inputs="[{label:'Label:',id:'linkLabelInput',name:'linkLabel',placeholder:'playstore'},{label:'URL:',id:'linkUrlInput',name:'linkUrl',placeholder:'playstore/mygame.exe'}]" main-id="linksInputContainer" main-label="Links:" help-id="linksHelp" help="A label that describes what the following URL is for."></branched-form-group>
 
-<div class="form-group">
-<label for="imgurlsinput">Image URLS:</label>
-<input v-for="url in imgUrls" type="text" name="imgurls" class="form-control" id="imgurlsinput" aria-describedby="imgurlshelp" placeholder="https://exampleimghosting/xyz.png">
-<button type="button" class="btn btn-primary" @click="imgUrls++">+</button>
-<small id="imgurlshelp" class="form-text text-muted">one or more URL to images.</small>
-</div>
+  <branched-form-group :many="true" :inputs="[{label:'name:',id:'contributorNameInput',name:'contributorName',placeholder:'John Smith the 17th'},{label:'Role:',id:'contributoRoleInput',name:'contributorRole',placeholder:'graphic design and being cool'}]" main-id="contributorsInputContainer" main-label="Contributors:" help-id="contributorsHelp" help="The name of contributor(s) and their role."></branched-form-group>
 
-<div class="form-group">
-<label for="linksinput">Links:</label>
-
-<div v-for="link in links" id="linksinput" aria-describedby="linkshelp">
-
-<label for="linklabelinput">Label:</label>
-<input type="text" name="linklabel" class="form-control" id="linklabelinput" placeholder="appstore">
-
-<label for="linkurlinput">URL:</label>
-<input type="text" name="linkurl" class="form-control" id="linkurlinput" placeholder="https://example.appstore/red-leaf">
-
-</div>
-
-<button type="button" class="btn btn-primary" @click="links++">+</button>
-
-<small id="linkshelp" class="form-text text-muted">A label that describes what the following URL is for.</small>
-
-
-
-</div>
-
-
-
-<div class="form-group">
-
-<label for="contributorsinput">Project contributors:</label>
-
-<div v-for="contributor in contributors" id="contributorsinput" aria-describedby="contributorshelp">
-
-<label for="nameinput">name:</label>
-<input type="text" name="contributorname" class="form-control" id="contributornameinput" placeholder="John Smith">
-
-<label for="linkurlinput">role:</label>
-<input type="text" name="contributorrole" class="form-control" id="contributorroleinput" placeholder="graphic design">
-
-</div>
-
-<button type="button" class="btn btn-primary" @click="contributors++">+</button>
-<small id="contributorshelp" class="form-text text-muted">The name for a contributor and his role.</small>
-
-
-
-</div>
-
-
-
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="mb-4 btn btn-primary">Submit</button>
 
 </form>
   `
