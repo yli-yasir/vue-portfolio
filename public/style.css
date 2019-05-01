@@ -18,6 +18,10 @@ html, body, #app {
   padding-top: 70px;
 }
 
+textarea{
+height:100px!important;
+}
+
 .index-screen{
   display: -webkit-box;
   display: -ms-flexbox;

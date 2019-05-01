@@ -91,23 +91,23 @@ var newProjectFormComponent={
   template: newProjectFormHtml
 }
 
-var formGroupComponent=Vue.component('form-group',{
+var duplicatableMixin= {
   data: function(){
     return {
       count: 1
     }
-  },
-  props:['inputId','inputName','inputLabel','placeholder','helpId','help','many'],
+  }
+}
+var formGroupComponent=Vue.component('form-group',{
+  mixins = [duplicatableMixin]
+,
+  props:["textArea","inputId",'inputName','inputLabel','placeholder','helpId','help','many'],
   template: formGroupHtml
 });
 
 var branchedFormGroupComponent=Vue.component('branched-form-group',{
-  data: function(){
-    return {
-      count: 1
-    }
-  },
-  props:['mainId','mainLabel','inputs','helpId','help','many'],
+  mixins= [duplicatableMixin],
+  props:["mainId",'mainLabel','inputs','helpId','help','many'],
   template: branchedFormGroupHtml
 });
 

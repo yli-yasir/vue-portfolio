@@ -132,8 +132,9 @@ const indexScreenHtml = `
 
   const formGroupHtml= `
   <div class="form-group">
-  <label :for="inputId">{{inputLabel}}</label>
-  <input v-for="one in count" type="text" :name="inputName" class="form-control" :id="inputId" :aria-describedby="helpId" :placeholder="placeholder">
+  <label :for="inputId + 0">{{inputLabel}}</label>
+  <textarea v-if="textArea" v-for="(one,index) in count" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder"></textarea>
+  <input v-else v-for="(one,index) in count" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
   <button v-if="many" type="button" class="btn btn-primary" @click="count++">+</button>
   <small :id="helpId" class="form-text text-muted">{{help}}</small>
   </div>
@@ -141,11 +142,11 @@ const indexScreenHtml = `
 
   const branchedFormGroupHtml = `
   <div class="form-group">
-  <label :for="mainId">{{mainLabel}}</label>
-  <div v-for="one in count" :id="mainId" :aria-describedby="helpId">
+  <label :for="mainId + 0">{{mainLabel}}</label>
+  <div v-for="(one,index) in count" :id="mainId+index" :aria-describedby="helpId">
   <template v-for="input in inputs">
-  <label :for="input.id">{{input.label}}</label>
-  <input  type="text" :name="input.name" class="form-control" :id="input.id" :placeholder="input.placeholder">
+  <label :for="input.id + index">{{input.label}}</label>
+  <input  type="text" :name="input.name" class="form-control" :id="input.id + index" :placeholder="input.placeholder">
   </template>
   </div>
   <button v-if="many" type="button" class="btn btn-primary" @click="count++">+</button>
@@ -155,18 +156,17 @@ const indexScreenHtml = `
 
 
   const newProjectFormHtml=`
-
   <form class="container" method="post" action="/api/projects">
 
   <form-group input-id="pathInput" input-name="path" input-label="Path:" placeholder="red-leaf-app" help-id="pathHelp" help="Unique, no spaces or underscores."></form-group>
 
   <form-group input-id="nameInput" input-name="name" input-label="Name:" placeholder="Red Leaf" help-id="pathHelp" help="Preferably unique, can contain any character."></form-group>
 
-  <form-group input-id="thumbnailUrlInput" input-name="url" input-label="URL:" placeholder="https://exampleimghosting/xyz.png" help-id="thumbnailUrlHelp" help="URL to thumbnail image that will be shown in the project card at the index screen."></form-group>
+  <form-group input-id="thumbnailUrlInput" input-name="thumbnailUrl" input-label="Thumbnail URL:" placeholder="https://exampleimghosting/xyz.png" help-id="thumbnailUrlHelp" help="URL to thumbnail image that will be shown in the project card at the index screen."></form-group>
 
   <form-group input-id="shotDescriptionInput" input-name="shortDescription" input-label="Short description:" placeholder="Red leaves are so beautiful" help-id="shortDescriptionHelp" help="A short description of the project."></form-group>
 
-  <form-group input-id="descriptionInput" input-name="description" input-label="Description:" placeholder="Red leaves are so beautiful, they remind me of Autmn." help-id="descriptionHelp" help="A Longer description of the project."></form-group>
+  <form-group :text-area="true" input-id="descriptionInput" input-name="description" input-label="Description:" placeholder="Red leaves are so beautiful, they remind me of Autmn." help-id="descriptionHelp" help="A Longer description of the project."></form-group>
 
   <form-group input-id="youtubeEmbedUrlInput" input-name="youtubeEmbedUrl" input-label="Youtube embed URL:" placeholder="https://www.youtube.com/embed/lX44CAz-JhU" help-id="youtubeEmbedHelp" help="A YouTube embed URL of the project."></form-group>
 
