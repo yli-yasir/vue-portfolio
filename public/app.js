@@ -5,9 +5,8 @@ var navbarComponent = Vue.component("navbar", {
 
 //Card component
 var cardComponent = Vue.component("card", {
-  props: ["thumbnailUrl", "shortDescription", "title", "url"],
-  template: cardHtml,
-
+  props: ["thumbnailUrl", "shortDescription", "name", "url"],
+  template: cardHtml
 });
 
 //Youtube embed component
@@ -21,8 +20,8 @@ var carouselComponent = Vue.component("carousel", {
   template: carouselHtml
 });
 
-var loadingScreenComponent = Vue.component('loading-screen',{
-  template:loadingScreenHtml,
+var loadingScreenComponent = Vue.component("loading-screen", {
+  template: loadingScreenHtml,
   props: ["endpoint"],
   data: function() {
     return {
@@ -32,7 +31,7 @@ var loadingScreenComponent = Vue.component('loading-screen',{
       error: false,
       load: async function() {
         try {
-          console.log('making AJAX request to ' + this.endpoint)
+          console.log("making AJAX request to " + this.endpoint);
           let response = await axios.get(this.endpoint);
           this.response = response.data;
           this.success = true;
@@ -55,17 +54,16 @@ var loadingScreenComponent = Vue.component('loading-screen',{
   }
 });
 
-
 var homeScreenComponent = {
-  template: homeScreenHtml,
+  template: homeScreenHtml
 };
 
-var newsScreenComponent= Vue.component('news-screen',{
-  template: newsScreenHtml,
+var newsScreenComponent = Vue.component("news-screen", {
+  template: newsScreenHtml
 });
 
-var indexScreenComponent = Vue.component('index-screen',{
-  props: ["endpoint","routeForSingle"],
+var indexScreenComponent = Vue.component("index-screen", {
+  props: ["endpoint", "routeForSingle"],
   template: indexScreenHtml
 });
 
@@ -75,46 +73,88 @@ var projectDetailsScreenComponent = {
   template: projectDetailsScreenHtml
 };
 
-var memberDetailsScreenComponent= {
-  props:["endpoint"],
-  template:memberDetailsScreenHtml
-}
+var memberDetailsScreenComponent = {
+  props: ["endpoint"],
+  template: memberDetailsScreenHtml
+};
 
-var newProjectFormComponent={
-  data: function(){
-    return {
-      imgUrls : 1 ,
-      links: 1,
-      contributors: 1
-    }
-  },
-  template: newProjectFormHtml
-}
+var bindedToDatasetMixin = {
+  props: {
+    dataset: { type: Array },
+    addToDatasetButton: { type: Boolean, default: false }
+  }
+};
 
-var duplicatableMixin= {
-  data: function(){
-    return {
-      count: 1
-    }
+ var utilsMixin ={
+ methods:{
+  ensureArrayHasLength(array){
+    return array.length === 0 ? [''] : array
   }
 }
-var formGroupComponent=Vue.component('form-group',{
-  mixins : [duplicatableMixin]
-,
-  props:["textArea","inputId",'inputName','inputLabel','placeholder','helpId','help','many'],
+}
+
+
+var formGroupComponent = Vue.component("form-group", {
+  mixins: [bindedToDatasetMixin],
+  props: [
+    "textArea",
+    "inputId",
+    "inputName",
+    "inputLabel",
+    "placeholder",
+    "helpId",
+    "help"
+  ],
   template: formGroupHtml
 });
 
-
-var branchedFormGroupComponent=Vue.component('branched-form-group',{
-  mixins :  [duplicatableMixin],
-  props:["mainId",'mainLabel','inputs','helpId','help','many'],
+var branchedFormGroupComponent = Vue.component("branched-form-group", {
+  mixins: [bindedToDatasetMixin],
+  props: ["mainId", "mainLabel", "inputs", "helpId", "help"],
   template: branchedFormGroupHtml
 });
 
+const defaultDataset = {
+  type: Array,
+  default: function() {
+    return [""];
+  }
+};
+
+//this component takes datasets as props, the datasets
+//the datasets are then passed into each formGroupComponent
+//or branchedFormGroupComponent which is enabled through the bindedToDataSetMixin
+//thus, a suitable number of forms will be rendered for each dataset, with its value
+//if available
+var projectFormComponent = Vue.component("project-form", {
+  props: {
+    method: {type: String, default: "post"},
+    action : {type: String, default: "/api/projects"},
+    pathDataset: defaultDataset,
+    nameDataset: defaultDataset,
+    thumbnailUrlDataset: defaultDataset,
+    shortDescriptionDataset: defaultDataset,
+    descriptionDataset: defaultDataset,
+    youtubeEmbedDataset: defaultDataset,
+    imgUrlsDataset: defaultDataset,
+    linksDataset: defaultDataset,
+    contributorsDataset: defaultDataset
+  },
+  template: projectFormHtml
+});
+
+//This component is the  newProjectFormComponent but it's wrapped with a 
+//loadingComponent then loading component then grabs datasets from the endpoint
+//and supplies it to the newProjectFormComponent, which results in a populated
+//newProjectFormComponent
+var editProjectFormComponent = {
+  mixins: [utilsMixin],
+  props: ["endpoint","projectId"],
+  template: editProjectFormHtml
+};
+
 const routes = [
-  {path:"/",
-redirect:"/home"},
+  { path: "/", redirect: "/home" },
   {
     name: "home",
     path: "/home",
@@ -131,7 +171,15 @@ redirect:"/home"},
   {
     name: "newProject",
     path: "/projects/new",
-    component: newProjectFormComponent
+    component: projectFormComponent
+  },
+  {
+    name: "editProject",
+    path: "/projects/:_id/edit",
+    component: editProjectFormComponent,
+    props: route => {
+      return { endpoint: "/api/projects/" + route.params._id , projectId: route.params._id };
+    }
   },
   {
     name: "projectDetails",
@@ -148,19 +196,22 @@ redirect:"/home"},
     props: function() {
       return { endpoint: "/api/members", routeForSingle: "memberDetails" };
     }
-  },  
+  },
   {
     name: "memberDetails",
     path: "/members/:_id",
     component: memberDetailsScreenComponent,
-    props: route=> {
-      return { endpoint: "/api/members/" + route.params._id, routeForSingle: "memberDetails" };
+    props: route => {
+      return {
+        endpoint: "/api/members/" + route.params._id,
+        routeForSingle: "memberDetails"
+      };
     }
   }
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes: routes
 });
 

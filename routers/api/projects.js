@@ -12,9 +12,7 @@ router.get("/", async (req, res,next) => {
   }
 });
 
-router.post("/", async (req, res,next) => {
-  let body = req.body;
-
+function bodyToDocument(body){
   var _id = body.path;
   var name = body.name;
   var thumbnailUrl = body.thumbnailUrl;
@@ -49,28 +47,50 @@ router.post("/", async (req, res,next) => {
     namedElementContributorNames,
     namedElementContributorRoles
   ]);
+
+  return {
+    _id,
+    name,
+    thumbnailUrl,
+    shortDescription,
+    description,
+    youtubeEmbed,
+    imgUrls,
+    links,
+    contributors
+  }
+  ;
+ 
+}
+router.post("/", async (req, res,next) => {
+  let newDocument = bodyToDocument(req.body);
   //------
 
   try {
-    await new ProjectModel({
-      _id,
-      name,
-      thumbnailUrl,
-      shortDescription,
-      description,
-      youtubeEmbed,
-      imgUrls,
-      links,
-      contributors
-    }).save();
+    await new ProjectModel(newDocument).save();
     res.redirect("/projects/new");
   } catch (e) {
     next(e);
   }
 });
 
+router.put("/:id", async (req, res,next) => {
+  try {
+    console.log('hit patch')
+    let updatedDocument = bodyToDocument(req.body);
+
+    await ProjectModel.findByIdAndUpdate(req.params.id,updatedDocument).exec();
+    res.redirect('/projects')
+ 
+  }
+  catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:id", async (req, res,next) => {
   try {
+    console.log('hit get')
     let result = await ProjectModel.findById(req.params.id).exec();
     res.json(result);
   } catch (error) {

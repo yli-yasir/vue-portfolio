@@ -83,7 +83,7 @@ const indexScreenHtml = `
   v-for="item in slotProps.response" 
   :thumbnail-url="item.thumbnailUrl"
   :short-description="item.shortDescription"
-  :title="item.title"
+  :name="item.name"
   :key="item._id"
   :url="{name: routeForSingle , params: { _id : item._id } }"
   >
@@ -136,12 +136,12 @@ const indexScreenHtml = `
   <div class="form-group">
   <label :for="inputId + 0">{{inputLabel}}</label>
   <div v-if="textArea">
-  <textarea v-for="(one,index) in count" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder"></textarea>
+  <textarea v-for="(one,index) in dataset" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">{{one}}</textarea>
   </div>
   <div v-else>
-  <input v-for="(one,index) in count" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
+  <input v-for="(one,index) in dataset" :value="one" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
   </div>
-  <button v-if="many" type="button" class="btn btn-primary" @click="count++">+</button>
+  <button v-if="addToDatasetButton" type="button" class="btn btn-primary" @click="count++">+</button>
   <small :id="helpId" class="form-text text-muted">{{help}}</small>
   </div>
   `;
@@ -149,43 +149,67 @@ const indexScreenHtml = `
   const branchedFormGroupHtml = `
   <div class="form-group">
   <label :for="mainId + 0">{{mainLabel}}</label>
-  <div v-for="(one,index) in count" :id="mainId+index" :aria-describedby="helpId">
+  <div v-for="(one,index) in dataset" :id="mainId+index" :aria-describedby="helpId">
   <template v-for="input in inputs">
   <label :for="input.id + index">{{input.label}}</label>
-  <input  type="text" :name="input.name" class="form-control" :id="input.id + index" :placeholder="input.placeholder">
+  <input :value="one[input.propertyKey]" type="text" :name="input.name" class="form-control" :id="input.id + index" :placeholder="input.placeholder">
   </template>
   </div>
-  <button v-if="many" type="button" class="btn btn-primary" @click="count++">+</button>
+  <button v-if="addToDatasetButton" type="button" class="btn btn-primary" @click="count++">+</button>
   <small :id="helpId" class="form-text text-muted">{{help}}</small>
   </div>
   `
 
 
-  const newProjectFormHtml=`
-  <form class="container" method="post" action="/api/projects">
+  const projectFormHtml=`
+  <form class="container" :method="method" :action="action">
 
-  <form-group input-id="pathInput" input-name="path" input-label="*Path:" placeholder="red-leaf-app" help-id="pathHelp" help="Unique, no spaces or underscores."></form-group>
+  <form-group :dataset="pathDataset" input-id="pathInput" input-name="path" input-label="*Path:" placeholder="red-leaf-app" help-id="pathHelp" help="Unique, no spaces or underscores."></form-group>
 
-  <form-group input-id="nameInput" input-name="name" input-label="*Name:" placeholder="Red Leaf" help-id="pathHelp" help="Preferably unique, can contain any character."></form-group>
+  <form-group :dataset="nameDataset" input-id="nameInput" input-name="name" input-label="*Name:" placeholder="Red Leaf" help-id="pathHelp" help="Preferably unique, can contain any character."></form-group>
 
-  <form-group input-id="thumbnailUrlInput" input-name="thumbnailUrl" input-label="*Thumbnail URL:" placeholder="https://exampleimghosting/xyz.png" help-id="thumbnailUrlHelp" help="URL to thumbnail image that will be shown in the project card at the index screen."></form-group>
+  <form-group :dataset="thumbnailUrlDataset" input-id="thumbnailUrlInput" input-name="thumbnailUrl" input-label="*Thumbnail URL:" placeholder="https://exampleimghosting/xyz.png" help-id="thumbnailUrlHelp" help="URL to thumbnail image that will be shown in the project card at the index screen."></form-group>
 
-  <form-group input-id="shotDescriptionInput" input-name="shortDescription" input-label="Short description:" placeholder="Red leaves are so beautiful" help-id="shortDescriptionHelp" help="A short description of the project."></form-group>
+  <form-group :dataset="shortDescriptionDataset" input-id="shotDescriptionInput" input-name="shortDescription" input-label="Short description:" placeholder="Red leaves are so beautiful" help-id="shortDescriptionHelp" help="A short description of the project."></form-group>
 
-  <form-group :text-area="true" input-id="descriptionInput" input-name="description" input-label="*Description:" placeholder="Red leaves are so beautiful, they remind me of Autmn." help-id="descriptionHelp" help="A Longer description of the project."></form-group>
+  <form-group :dataset="descriptionDataset" :text-area="true" input-id="descriptionInput" input-name="description" input-label="*Description:" placeholder="Red leaves are so beautiful, they remind me of Autmn." help-id="descriptionHelp" help="A Longer description of the project."></form-group>
 
-  <form-group input-id="youtubeEmbedUrlInput" input-name="youtubeEmbed" input-label="Youtube embed URL:" placeholder="https://www.youtube.com/embed/lX44CAz-JhU" help-id="youtubeEmbedHelp" help="A YouTube embed URL of the project."></form-group>
+  <form-group :dataset="youtubeEmbedDataset" input-id="youtubeEmbedUrlInput" input-name="youtubeEmbed" input-label="Youtube embed URL:" placeholder="https://www.youtube.com/embed/lX44CAz-JhU" help-id="youtubeEmbedHelp" help="A YouTube embed URL of the project."></form-group>
 
-  <form-group :many="true" input-id="imgUrlsInput" input-name="imgUrls" input-label="*Image URLs:" placeholder="https://exampleimghosting/xyz.png" help-id="imgUrlsHelp" help="one or more URLs to images."></form-group>
+  <form-group :dataset="imgUrlsDataset" :addToDatasetButton="true" input-id="imgUrlsInput" input-name="imgUrls" input-label="*Image URLs:" placeholder="https://exampleimghosting/xyz.png" help-id="imgUrlsHelp" help="one or more URLs to images."></form-group>
 
-  <branched-form-group :many="true" :inputs="[{label:'Label:',id:'linkLabelInput',name:'linkLabel',placeholder:'playstore'},{label:'URL:',id:'linkUrlInput',name:'linkUrl',placeholder:'playstore/mygame.exe'}]" main-id="linksInputContainer" main-label="Links:" help-id="linksHelp" help="A label that describes what the following URL is for."></branched-form-group>
+  <branched-form-group :dataset="linksDataset" :addToDatasetButton="true" :inputs="[{label:'Label:',id:'linkLabelInput',name:'linkLabel',placeholder:'playstore', propertyKey:'label'},{label:'URL:',id:'linkUrlInput',name:'linkUrl',placeholder:'playstore/mygame.exe',propertyKey:'url'}]" main-id="linksInputContainer" main-label="Links:" help-id="linksHelp" help="A label that describes what the following URL is for."></branched-form-group>
 
-  <branched-form-group :many="true" :inputs="[{label:'name:',id:'contributorNameInput',name:'contributorName',placeholder:'John Smith the 17th'},{label:'Role:',id:'contributoRoleInput',name:'contributorRole',placeholder:'graphic design and being cool'}]" main-id="contributorsInputContainer" main-label="Contributors:" help-id="contributorsHelp" help="The name of contributor(s) and their role."></branched-form-group>
+  <branched-form-group :dataset="contributorsDataset" :addToDatasetButton="true" 
+  :inputs="[{label:'name:',id:'contributorNameInput',name:'contributorName',placeholder:'John Smith the 17th',propertyKey: 'name'},
+  {label:'Role:',id:'contributoRoleInput',name:'contributorRole',placeholder:'graphic design and being cool',propertyKey: 'role'}]" 
+  main-id="contributorsInputContainer" main-label="Contributors:" help-id="contributorsHelp" 
+  help="The name of contributor(s) and their role."></branched-form-group>
 
   <button type="submit" class="mb-4 btn btn-primary">Submit</button>
 
 </form>
-  `
+  `;
+
+const editProjectFormHtml = 
+`
+<loading-screen class="container" :endpoint="endpoint">
+<template v-slot:default="slotProps">
+<project-form 
+method="post"
+:action="'/api/projects/' + projectId + '?_method=PUT' "
+:path-dataset="Array(slotProps.response._id)"
+:name-dataset="Array(slotProps.response.name)"
+:thumbnail-url-dataset="Array(slotProps.response.thumbnailUrl)"
+:short-description-dataset="Array(slotProps.response.shortDescription)"
+:description-dataset="Array(slotProps.response.description)"
+:youtube-embed-dataset="Array(slotProps.response.youtubeEmbed)"
+:img-urls-dataset="ensureArrayHasLength(slotProps.response.imgUrls)" 
+:contributors-dataset="ensureArrayHasLength(slotProps.response.contributors)" 
+:links-dataset="ensureArrayHasLength(slotProps.response.links)"></project-form>
+</template>
+</loading-screen>
+`;
 
 const cardHtml = `
 <div class="card m-3 rounded bg-dark shadow">
@@ -195,7 +219,7 @@ const cardHtml = `
 <div class="card-body">
 
   <div class="card-text">
-  <h5 class="card-title">{{title}}</h5>
+  <h5 class="card-title">{{name}}</h5>
   <p>{{shortDescription}}</p>
   </div>
 

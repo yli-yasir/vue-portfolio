@@ -1,5 +1,6 @@
 const express = require("express");
 const server = express();
+const methodOverride= require('method-override')
 const apiRouter = require("./routers/api/main");
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
@@ -18,6 +19,8 @@ db.once("open", () => {
   //require('./utils/seeder.js')
 });
 //---/MONGO---
+
+server.use(methodOverride('_method'));
 
 
 server.use(bodyParser.urlencoded({ extended: true }));
