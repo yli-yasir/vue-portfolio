@@ -99,14 +99,15 @@ var duplicatableMixin= {
   }
 }
 var formGroupComponent=Vue.component('form-group',{
-  mixins = [duplicatableMixin]
+  mixins : [duplicatableMixin]
 ,
   props:["textArea","inputId",'inputName','inputLabel','placeholder','helpId','help','many'],
   template: formGroupHtml
 });
 
+
 var branchedFormGroupComponent=Vue.component('branched-form-group',{
-  mixins= [duplicatableMixin],
+  mixins :  [duplicatableMixin],
   props:["mainId",'mainLabel','inputs','helpId','help','many'],
   template: branchedFormGroupHtml
 });

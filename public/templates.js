@@ -133,8 +133,12 @@ const indexScreenHtml = `
   const formGroupHtml= `
   <div class="form-group">
   <label :for="inputId + 0">{{inputLabel}}</label>
-  <textarea v-if="textArea" v-for="(one,index) in count" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder"></textarea>
-  <input v-else v-for="(one,index) in count" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
+  <div v-if="textArea">
+  <textarea v-for="(one,index) in count" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder"></textarea>
+  </div>
+  <div v-else>
+  <input v-for="(one,index) in count" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
+  </div>
   <button v-if="many" type="button" class="btn btn-primary" @click="count++">+</button>
   <small :id="helpId" class="form-text text-muted">{{help}}</small>
   </div>
@@ -168,7 +172,7 @@ const indexScreenHtml = `
 
   <form-group :text-area="true" input-id="descriptionInput" input-name="description" input-label="Description:" placeholder="Red leaves are so beautiful, they remind me of Autmn." help-id="descriptionHelp" help="A Longer description of the project."></form-group>
 
-  <form-group input-id="youtubeEmbedUrlInput" input-name="youtubeEmbedUrl" input-label="Youtube embed URL:" placeholder="https://www.youtube.com/embed/lX44CAz-JhU" help-id="youtubeEmbedHelp" help="A YouTube embed URL of the project."></form-group>
+  <form-group input-id="youtubeEmbedUrlInput" input-name="youtubeEmbed" input-label="Youtube embed URL:" placeholder="https://www.youtube.com/embed/lX44CAz-JhU" help-id="youtubeEmbedHelp" help="A YouTube embed URL of the project."></form-group>
 
   <form-group :many="true" input-id="imgUrlsInput" input-name="imgUrls" input-label="Image URLs:" placeholder="https://exampleimghosting/xyz.png" help-id="imgUrlsHelp" help="one or more URLs to images."></form-group>
 
