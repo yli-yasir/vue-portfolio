@@ -8,10 +8,10 @@ module.exports = mongoose.model(
       {
         _id: {type:String, required: true},
         description: {type:String, required: true},
-        youtubeEmbed: {type:String, required: true},
-        imgUrls:{type:[String], required: true},
-        links: {type:[new mongoose.Schema({ label: String, url: String })],required: true},
-        contributers: {type:[new mongoose.Schema({name: String, role: String})],required: true}
+        youtubeEmbed: String,
+        imgUrls: {type:[String],required:true},
+        links: [new mongoose.Schema({ label: String, url: String })],
+        contributors: [new mongoose.Schema({name: String, role: String})]
       },
       //and then we add the fields we have defined in the cardable interface
       require("./cardable.js")
