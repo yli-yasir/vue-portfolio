@@ -79,19 +79,28 @@ var memberDetailsScreenComponent = {
 };
 
 var bindedToDatasetMixin = {
+  data: function(){
+    return {
+      newItems: []
+    }
+  },
   props: {
     dataset: { type: Array },
     addToDatasetButton: { type: Boolean, default: false }
+  },
+  computed: {
+    ownDataset: function(){
+      return this.dataset === [] ? [''] : this.dataset.concat(this.newItems)
+    }
+  },
+  methods: {
+    addNewItem: function(){
+      this.newItems.push('')
+    }
   }
 };
 
- var utilsMixin ={
- methods:{
-  ensureArrayHasLength(array){
-    return array.length === 0 ? [''] : array
-  }
-}
-}
+
 
 
 var formGroupComponent = Vue.component("form-group", {
@@ -148,7 +157,6 @@ var projectFormComponent = Vue.component("project-form", {
 //and supplies it to the newProjectFormComponent, which results in a populated
 //newProjectFormComponent
 var editProjectFormComponent = {
-  mixins: [utilsMixin],
   props: ["endpoint","projectId"],
   template: editProjectFormHtml
 };

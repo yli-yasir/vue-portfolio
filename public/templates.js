@@ -136,12 +136,12 @@ const indexScreenHtml = `
   <div class="form-group">
   <label :for="inputId + 0">{{inputLabel}}</label>
   <div v-if="textArea">
-  <textarea v-for="(one,index) in dataset" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">{{one}}</textarea>
+  <textarea v-for="(one,index) in ownDataset" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">{{one}}</textarea>
   </div>
   <div v-else>
-  <input v-for="(one,index) in dataset" :value="one" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
+  <input v-for="(one,index) in ownDataset" :value="one" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
   </div>
-  <button v-if="addToDatasetButton" type="button" class="btn btn-primary" @click="count++">+</button>
+  <button v-if="addToDatasetButton" type="button" class="btn btn-primary" @click="addNewItem">+</button>
   <small :id="helpId" class="form-text text-muted">{{help}}</small>
   </div>
   `;
@@ -149,13 +149,13 @@ const indexScreenHtml = `
   const branchedFormGroupHtml = `
   <div class="form-group">
   <label :for="mainId + 0">{{mainLabel}}</label>
-  <div v-for="(one,index) in dataset" :id="mainId+index" :aria-describedby="helpId">
+  <div v-for="(one,index) in ownDataset" :id="mainId+index" :aria-describedby="helpId">
   <template v-for="input in inputs">
   <label :for="input.id + index">{{input.label}}</label>
   <input :value="one[input.propertyKey]" type="text" :name="input.name" class="form-control" :id="input.id + index" :placeholder="input.placeholder">
   </template>
   </div>
-  <button v-if="addToDatasetButton" type="button" class="btn btn-primary" @click="count++">+</button>
+  <button v-if="addToDatasetButton" type="button" class="btn btn-primary" @click="addNewItem">+</button>
   <small :id="helpId" class="form-text text-muted">{{help}}</small>
   </div>
   `
@@ -203,10 +203,10 @@ method="post"
 :thumbnail-url-dataset="Array(slotProps.response.thumbnailUrl)"
 :short-description-dataset="Array(slotProps.response.shortDescription)"
 :description-dataset="Array(slotProps.response.description)"
-:youtube-embed-dataset="Array(slotProps.response.youtubeEmbed)"
-:img-urls-dataset="ensureArrayHasLength(slotProps.response.imgUrls)" 
-:contributors-dataset="ensureArrayHasLength(slotProps.response.contributors)" 
-:links-dataset="ensureArrayHasLength(slotProps.response.links)"></project-form>
+:youtube-embed-dataset="slotProps.response.youtubeEmbed"
+:img-urls-dataset="slotProps.response.imgUrls" 
+:contributors-dataset="slotProps.response.contributors" 
+:links-dataset="slotProps.response.links"></project-form>
 </template>
 </loading-screen>
 `;

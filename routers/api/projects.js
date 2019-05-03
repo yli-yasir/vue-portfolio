@@ -76,7 +76,6 @@ router.post("/", async (req, res,next) => {
 
 router.put("/:id", async (req, res,next) => {
   try {
-    console.log('hit patch')
     let updatedDocument = bodyToDocument(req.body);
 
     await ProjectModel.findByIdAndUpdate(req.params.id,updatedDocument).exec();
