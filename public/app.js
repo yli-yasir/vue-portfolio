@@ -78,6 +78,12 @@ var memberDetailsScreenComponent = {
   template: memberDetailsScreenHtml
 };
 
+const defaultDataset = {
+  type: [Array,String],
+  default: function() {
+    return [""];
+  }
+}
 var bindedToDatasetMixin = {
   data: function(){
     return {
@@ -85,12 +91,17 @@ var bindedToDatasetMixin = {
     }
   },
   props: {
-    dataset: { type: Array },
+    dataset: defaultDataset,
     addToDatasetButton: { type: Boolean, default: false }
   },
   computed: {
     ownDataset: function(){
-      return this.dataset === [] ? [''] : this.dataset.concat(this.newItems)
+       if(Array.isArray(this.dataset)){
+        return this.dataset === [] ? [''] : this.dataset.concat(this.newItems)
+       } 
+       else{
+         return Array(this.dataset)
+       }
     }
   },
   methods: {
@@ -123,12 +134,6 @@ var branchedFormGroupComponent = Vue.component("branched-form-group", {
   template: branchedFormGroupHtml
 });
 
-const defaultDataset = {
-  type: Array,
-  default: function() {
-    return [""];
-  }
-};
 
 //this component takes datasets as props, the datasets
 //the datasets are then passed into each formGroupComponent
