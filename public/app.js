@@ -166,6 +166,26 @@ var editProjectFormComponent = {
   template: editProjectFormHtml
 };
 
+var memberFormComponent = Vue.component("member-form", {
+  props: {
+    method: {type: String, default: "post"},
+    action : {type: String, default: "/api/members"},
+    pathDataset: defaultDataset,
+    nameDataset: defaultDataset,
+    thumbnailUrlDataset: defaultDataset,
+    shortDescriptionDataset: defaultDataset,
+    descriptionDataset: defaultDataset,
+  },
+  template: memberFormHtml
+});
+
+var editMemberFormComponent = Vue.component("member-form", {
+  props: {
+    props: ["endpoint","memberId"],
+  },
+  template: editMemberFormHtml
+});
+
 const routes = [
   { path: "/", redirect: "/home" },
   {
@@ -208,6 +228,18 @@ const routes = [
     component: indexScreenComponent,
     props: function() {
       return { endpoint: "/api/members", routeForSingle: "memberDetails" };
+    }
+  }, {
+    name: "newMember",
+    path: "/members/new",
+    component: memberFormComponent
+  },
+  {
+    name: "editMember",
+    path: "/members/:_id/edit",
+    component: editMemberFormComponent,
+    props: route => {
+      return { endpoint: "/api/members/" + route.params._id , memberId: route.params._id };
     }
   },
   {

@@ -89,7 +89,6 @@ router.put("/:id", async (req, res,next) => {
 
 router.get("/:id", async (req, res,next) => {
   try {
-    console.log('hit get')
     let result = await ProjectModel.findById(req.params.id).exec();
     res.json(result);
   } catch (error) {
