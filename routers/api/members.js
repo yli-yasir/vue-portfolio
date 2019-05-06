@@ -1,28 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const memberModel = require("../../models/member");
+const MemberModel = require("../../models/member");
+const restfulRouter = require("../../utils/rest")
 
-router.get("/", async (req, res) => {
-  try {
-    let result = await memberModel.find({}).exec();
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-});
+function bodyToDocument(body){
+  var _id = body.path;
+  var name = body.name;
+  var thumbnailUrl = body.thumbnailUrl;
+  var shortDescription = body.shortDescription;
+  var description = body.description;
 
-router.get("/new", async (req, res) => {
-  res.json(memberModel.schema.requiredPaths());
-});
-
-router.get("/:id", async (req, res) => {
-  try{
-  let result = await memberModel.findById(req.params.id).exec();
-  res.json(result);
+  return {
+    _id,
+    name,
+    thumbnailUrl,
+    shortDescription,
+    description,
+  };
+ 
 }
-catch(error){
-  next(error)
-}
-});
 
-module.exports = router;
+module.exports = restfulRouter(router,MemberModel,bodyToDocument);
+ 

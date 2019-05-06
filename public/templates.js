@@ -50,7 +50,7 @@ const homeScreenHtml =
       <news-screen></news-screen>
       </div>
       <div class="col-md">
-      <h5 class="mt-2"><em>Latest Projects:</em></h5>
+      <h5 class="mt-2">Latest Projects:</h5>
       <index-screen
       endpoint="/api/projects"
       route-for-single="projectDetails">
@@ -66,9 +66,10 @@ const homeScreenHtml =
     v-for="news in slotProps.response"
     :key="news._id">
   
-    <p>{{news.date}}</p>
-    <p>{{news.title}}</p>
+    <p>{{news.name}}</p>
     <p>{{news.description}}</p>
+    <p>{{news.date}}</p>
+
   
     </div>
     </template>
@@ -139,7 +140,7 @@ const indexScreenHtml = `
   <textarea v-for="(one,index) in ownDataset" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">{{one}}</textarea>
   </div>
   <div v-else>
-  <input v-for="(one,index) in ownDataset" :value="one" type="text" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
+  <input v-for="(one,index) in ownDataset" :value="one" :type="inputType" :name="inputName" class="form-control" :id="inputId + index" :aria-describedby="helpId" :placeholder="placeholder">
   </div>
   <button v-if="addToDatasetButton" type="button" class="btn btn-primary" @click="addNewItem">+</button>
   <small :id="helpId" class="form-text text-muted">{{help}}</small>
@@ -219,11 +220,11 @@ const memberFormHtml=`
 
 <form-group :dataset="nameDataset" input-id="nameInput" input-name="name" input-label="*Name:" placeholder="John Smith" help-id="pathHelp" help="Preferably unique, can contain any character."></form-group>
 
-<form-group :dataset="thumbnailUrlDataset" input-id="thumbnailUrlInput" input-name="thumbnailUrl" input-label="*Thumbnail URL:" placeholder="https://exampleimghosting/xyz.png" help-id="thumbnailUrlHelp" help="URL to thumbnail image that will be shown in the project card at the index screen."></form-group>
+<form-group :dataset="thumbnailUrlDataset" input-id="thumbnailUrlInput" input-name="thumbnailUrl" input-label="*Thumbnail URL:" placeholder="https://exampleimghosting/xyz.png" help-id="thumbnailUrlHelp" help="URL to thumbnail image that will be shown in the member card at the index screen."></form-group>
 
-<form-group :dataset="shortDescriptionDataset" input-id="shotDescriptionInput" input-name="shortDescription" input-label="Short description:" placeholder="John smith has been here since the start" help-id="shortDescriptionHelp" help="A short description of the project."></form-group>
+<form-group :dataset="shortDescriptionDataset" input-id="shotDescriptionInput" input-name="shortDescription" input-label="Short description:" placeholder="John smith has been here since the start" help-id="shortDescriptionHelp" help="A short description of the member."></form-group>
 
-<form-group :dataset="descriptionDataset" :text-area="true" input-id="descriptionInput" input-name="description" input-label="*Description:" placeholder="John Smith is xyz and he likes to do abc" help-id="descriptionHelp" help="A Longer description of the project."></form-group>
+<form-group :dataset="descriptionDataset" :text-area="true" input-id="descriptionInput" input-name="description" input-label="*Description:" placeholder="John Smith is xyz and he likes to do abc" help-id="descriptionHelp" help="A Longer description of the member."></form-group>
 
 <button type="submit" class="mb-4 btn btn-primary">Submit</button>
 
@@ -233,8 +234,9 @@ const memberFormHtml=`
 const editMemberFormHtml = 
 `
 <loading-screen class="container" :endpoint="endpoint">
+
 <template v-slot:default="slotProps">
-<project-form 
+<member-form 
 method="post"
 :action="'/api/members/' + memberId + '?_method=PUT' "
 :path-dataset="slotProps.response._id"
@@ -242,10 +244,45 @@ method="post"
 :thumbnail-url-dataset="slotProps.response.thumbnailUrl"
 :short-description-dataset="slotProps.response.shortDescription"
 :description-dataset="slotProps.response.description"
+:links-dataset="slotProps.response.links"></member-form>
 </template>
+
 </loading-screen>
 `;
 
+
+const newsFormHtml=`
+<form class="container" :method="method" :action="action">
+
+<form-group :dataset="nameDataset" input-id="nameInput" input-name="name" input-label="*Title:" placeholder="game released" help-id="pathHelp" help="Preferably unique, can contain any character."></form-group>
+
+<form-group :dataset="descriptionDataset" :text-area="true" input-id="descriptionInput" input-name="description" input-label="*Description:" placeholder="John Smith is xyz and he likes to do abc" help-id="descriptionHelp" help="A Longer description of the member."></form-group>
+
+<form-group :dataset="dateDataset" input-type="date" input-id="dateInput" input-name="date" input-label="Date:" placeholder="feb?" help-id="dateHelp" help="the date of the news."></form-group>
+
+<button type="submit" class="mb-4 btn btn-primary">Submit</button>
+
+</form>
+`;
+
+const editNewsFormHtml = 
+`
+<loading-screen class="container" :endpoint="endpoint">
+
+<template v-slot:default="slotProps">
+<news-form 
+method="post"
+:action="'/api/news/' + newsId + '?_method=PUT' "
+:path-dataset="slotProps.response._id"
+:name-dataset="slotProps.response.name"
+:thumbnail-url-dataset="slotProps.response.thumbnailUrl"
+:short-description-dataset="slotProps.response.shortDescription"
+:description-dataset="slotProps.response.description"
+:links-dataset="slotProps.response.links"></news-form>
+</template>
+
+</loading-screen>
+`;
 const cardHtml = `
 <div class="card m-3 rounded bg-dark shadow">
   

@@ -1,14 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const newsModel = require("../../models/news");
+const restfulRouter = require("../../utils/rest")
 
-router.get("/", async (req, res) => {
-  try {
-    let result = await newsModel.find({}).exec();
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-});
+function bodyToDocument(body){
+  var name = body.name;
+  var description = body.description;
+  var date = body.date
 
-module.exports = router;
+  return {
+    name,
+    description,
+    date
+  };
+ 
+}
+
+module.exports = restfulRouter(router,newsModel,bodyToDocument);

@@ -31,7 +31,6 @@ var loadingScreenComponent = Vue.component("loading-screen", {
       error: false,
       load: async function() {
         try {
-          console.log("making AJAX request to " + this.endpoint);
           let response = await axios.get(this.endpoint);
           this.response = response.data;
           this.success = true;
@@ -45,6 +44,7 @@ var loadingScreenComponent = Vue.component("loading-screen", {
     };
   },
   mounted: function() {
+    console.log('mounted')
     this.load();
   },
   watch: {
@@ -116,15 +116,16 @@ var bindedToDatasetMixin = {
 
 var formGroupComponent = Vue.component("form-group", {
   mixins: [bindedToDatasetMixin],
-  props: [
-    "textArea",
-    "inputId",
-    "inputName",
-    "inputLabel",
-    "placeholder",
-    "helpId",
-    "help"
-  ],
+  props:{
+    inputType : {type: String, default: "text"},
+    textArea : {type: Boolean, default: false },
+    inputId: {type: String},
+    inputName : {type: String},
+    inputLabel: {type: String},
+    placeholder: {type: String},
+    helpId: {type: String},
+    help: {type: String}
+  },
   template: formGroupHtml
 });
 
@@ -179,12 +180,34 @@ var memberFormComponent = Vue.component("member-form", {
   template: memberFormHtml
 });
 
-var editMemberFormComponent = Vue.component("member-form", {
-  props: {
-    props: ["endpoint","memberId"],
-  },
+var editMemberFormComponent =  {
+  props: ["endpoint","memberId"],
   template: editMemberFormHtml
+};
+
+var editMemberFormComponent =  {
+  props: ["endpoint","memberId"],
+  template: editMemberFormHtml
+};
+
+var newsFormComponent = Vue.component("news-form", {
+  props: {
+    method: {type: String, default: "post"},
+    action : {type: String, default: "/api/news"},
+    pathDataset: defaultDataset,
+    nameDataset: defaultDataset,
+    descriptionDataset: defaultDataset,
+    dateDataset: defaultDataset
+  },
+  template: newsFormHtml
 });
+
+var editNewsFormComponent = {
+  props: ["endpoint","newsId"],
+  template: editNewsFormHtml
+};
+
+
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -251,6 +274,19 @@ const routes = [
         endpoint: "/api/members/" + route.params._id,
         routeForSingle: "memberDetails"
       };
+    }
+  },
+  {
+    name: "newNews",
+    path: "/news/new",
+    component: newsFormComponent
+  },
+  {
+    name: "editNews",
+    path: "/news/:_id/edit",
+    component: editNewsFormComponent,
+    props: route => {
+      return { endpoint: "/api/news/" + route.params._id , newsId: route.params._id };
     }
   }
 ];

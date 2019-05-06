@@ -2,15 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ProjectModel = require("../../models/project");
 const commonUtils = require("../../utils/common");
-
-router.get("/", async (req, res,next) => {
-  try {
-    let result = await ProjectModel.find({}).exec();
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-});
+const restfulRouter = require("../../utils/rest")
 
 function bodyToDocument(body){
   var _id = body.path;
@@ -58,42 +50,8 @@ function bodyToDocument(body){
     imgUrls,
     links,
     contributors
-  }
-  ;
+  };
  
 }
-router.post("/", async (req, res,next) => {
-  let newDocument = bodyToDocument(req.body);
-  //------
 
-  try {
-    await new ProjectModel(newDocument).save();
-    res.redirect("/projects/new");
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.put("/:id", async (req, res,next) => {
-  try {
-    let updatedDocument = bodyToDocument(req.body);
-
-    await ProjectModel.findByIdAndUpdate(req.params.id,updatedDocument).exec();
-    res.redirect('/projects')
- 
-  }
-  catch (error) {
-    next(error);
-  }
-});
-
-router.get("/:id", async (req, res,next) => {
-  try {
-    let result = await ProjectModel.findById(req.params.id).exec();
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-});
-
-module.exports = router;
+module.exports = restfulRouter(router,ProjectModel,bodyToDocument);
