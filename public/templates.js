@@ -1,6 +1,6 @@
 const navbarHtml = ` 
 <!--navbar-->
-<nav class="navbar d-print shadow rounded-bottom justify-content-center navbar-expand-sm navbar-dark bg-dark fixed-top">
+<nav class=" border navbar d-print rounded-bottom justify-content-center navbar-expand-sm navbar-dark bg-dark fixed-top">
 
   <!--toggler-->
   <button class="navbar-toggler mb-1" type="button" data-toggle="collapse" data-target="#navContainer" aria-controls="navContainer" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,13 +62,13 @@ const homeScreenHtml =
     const newsScreenHtml = `
     <loading-screen endpoint="/api/news">
     <template v-slot:default="slotProps">
-    <div class="my-3 p-3 shadow news-container bg-dark rounded d-inline-block"
+    <div class="border shadow my-3 p-3 news-container bg-dark rounded d-inline-block"
     v-for="news in slotProps.response"
     :key="news._id">
   
     <p>{{news.name}}</p>
     <p>{{news.description}}</p>
-    <p>{{news.date}}</p>
+    <p>{{new Date(news.date)}}</p>
 
   
     </div>
@@ -284,7 +284,7 @@ method="post"
 </loading-screen>
 `;
 const cardHtml = `
-<div class="card m-3 rounded bg-dark shadow">
+<div class=" border card m-3 rounded bg-dark shadow">
   
 <img :src="thumbnailUrl" class="card-img-top rounded-top p-1" alt="thumbnail">
 

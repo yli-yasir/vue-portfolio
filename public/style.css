@@ -40,7 +40,7 @@ height:100px!important;
 
 
 :root {
-  --pen-stroke: #181a1f;
+  --pen-stroke: #202124;
 }
 
 .router-link-active {
@@ -74,11 +74,11 @@ height:100px!important;
 }
 
 .bg-dark {
-  background-color: #21252b !important;
+  background-color: #55C6D6 !important;
 }
 
 .bg-lighter-dark {
-  background-color: #282c34 !important;
+  background-color: #55C6D6 !important;
 }
 
 .card {

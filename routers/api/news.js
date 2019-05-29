@@ -6,12 +6,11 @@ const restfulRouter = require("../../utils/rest")
 function bodyToDocument(body){
   var name = body.name;
   var description = body.description;
-  var date = body.date
 
   return {
     name,
     description,
-    date
+    date : new Date()
   };
  
 }

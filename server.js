@@ -1,6 +1,7 @@
 const express = require("express");
-const server = express();
-const methodOverride= require('method-override')
+const app = express();
+const session = require("express-session");
+const methodOverride= require('method-override');
 const apiRouter = require("./routers/api/main");
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
@@ -19,21 +20,23 @@ db.once("open", () => {
   //require('./utils/seeder.js')
 });
 //---/MONGO---
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+}))
 
-server.use(methodOverride('_method'));
+ app.use(methodOverride('_method'));
 
+ app.use(bodyParser.urlencoded({ extended: true }));
+ app.use("/public", express.static("public"));
 
-server.use(bodyParser.urlencoded({ extended: true }));
+//Use routers 
+app.use("/api", apiRouter);
 
-server.use("/public", express.static("public"));
-
-//Use routers
-server.use("/api", apiRouter);
-
-server.get("/*", (req, res, next) => {
+app.get("/*", (req, res, next) => {
   res.sendFile( __dirname + "/index.html")
 });
 
 var port = process.env.PORT || 5000;
-
-server.listen(port, () => console.log(`the server has started on port: ${port}`));
+ app.listen(port, () => console.log(`the app has started on port: ${port}`));

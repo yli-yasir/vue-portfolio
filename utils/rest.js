@@ -2,6 +2,7 @@ function restfulRouter(expressRouter,mongooseModel,bodyToDocument){
 
     //get all resources
     expressRouter.get("/", async (req, res,next) => {
+      console.log(req.session.id);
         try {
           let result = await mongooseModel.find({}).exec();
           res.json(result);
