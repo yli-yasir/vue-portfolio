@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const MemberModel = require("../../models/member");
-const restfulRouter = require("../../utils/rest")
+const MemberModel = require("../models/member");
+const restfulRouter = require("../utils/rest")
 
 function bodyToDocument(body){
   var _id = body.path;

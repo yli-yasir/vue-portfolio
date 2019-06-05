@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const newsModel = require("../../models/news");
-const restfulRouter = require("../../utils/rest")
+const newsModel = require("../models/news");
+const restfulRouter = require("../utils/rest")
 
 function bodyToDocument(body){
   var name = body.name;

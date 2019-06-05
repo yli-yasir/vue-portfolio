@@ -19,13 +19,4 @@ module.exports = function setupAuth(passport) {
     })
   );
 
-  // passport.serializeUser(function(user, done) {
-  //     done(null, user._id);
-  //   });
-
-  //   passport.deserializeUser(function(id, done) {
-  //     userModel.findById(id, function(err, user) {
-  //       done(err, user);
-  //     });
-  //   });
 };

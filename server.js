@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const methodOverride= require('method-override');
 const apiRouter = require("./routers/api/main");
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const passport = require('passport');
@@ -16,7 +15,7 @@ mongoose.connect(
 
 const db = mongoose.connection;
 
-db.on("error", console.error.bind(console, "connection error!!!"));
+db.on("error", console.error.bind(console, "Connection error!!!"));
 db.once("open", () => {
   console.log("Connected to mongo!");
 //require('./utils/seeder.js')
@@ -25,21 +24,19 @@ db.once("open", () => {
 
 app.use(cookieParser());
 app.use(passport.initialize());
-app.use(methodOverride('_method'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/public", express.static("public"));
 require('./utils/auth.js')(passport);
-
-
-
-
+app.use(methodOverride('_method'));
+app.use(express.urlencoded({ extended: true }));
+app.use("/public", express.static("public"));
 
 //Use routers 
-app.use("/api", apiRouter);
+router.use("api/members", require("./routers/members.js"));
+router.use("api/projects", require("./routers/projects.js"));
+router.use("api/news", require("./routers/news.js"));
 
+//todo change this when you are done with the front end
 app.get("/*", (req, res, next) => {
   res.sendFile( __dirname + "/index.html")
 });
 
-var port = process.env.PORT;
- app.listen(port, () => console.log(`the app has started on port: ${port}`));
+ app.listen( process.env.PORT, () => console.log('the app has started on port:' +  process.env.PORT));
