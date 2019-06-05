@@ -17,11 +17,13 @@ Vuejs (Note that this repository only contains the distributable version of the 
 
 ## Database Schemas
 
+**These do not include fields automatically injected by mongoose (other than _id)**
+
 - **Common Fields**
   - \_id : String (The value of the name field with white spaces replaced by hyphens)
   - name : String
   - description : String
-
+  - thumbnailUrl : String
 ---
 
 - Member
@@ -37,9 +39,52 @@ Vuejs (Note that this repository only contains the distributable version of the 
 ---
 
 - News
-  - date: Date
+  - Consists of common fields.
 
 ---
+
 - User (DOES NOT IMPLEMENT COMMON FIELDS)
-  - _id : String
+  - \_id : String
   - password : String
+
+## Request parameters to field mapping
+
+- Project
+
+```
+  - name -> () -> _id
+
+  - name -> name
+
+  - description -> description
+
+  - imgUrls -> imgUrls
+
+  - contributorNames \
+                      -> () -> contributors
+  - contributorRoles /
+
+  - youtubeEmbed -> youtubeEmbed
+```
+
+- Member
+
+```
+  - name -> () -> _id
+
+  - name -> name
+
+  - description -> description
+```
+
+- News
+
+```
+  - title -> () -> _id
+
+  - title -> name
+
+  - description -> description
+```
+
+

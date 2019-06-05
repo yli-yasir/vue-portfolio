@@ -2,6 +2,7 @@ function ensureArray(obj){
     return Array.isArray(obj) ? obj : Array(obj)
 }
 
+//returns a list whose elements have a name.
 function nameListElements(list,elementName){
     list.elementName = elementName; 
     return list;
