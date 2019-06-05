@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const session = require("express-session");
 const methodOverride= require('method-override');
 const apiRouter = require("./routers/api/main");
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const passport = require('passport');
 
@@ -18,18 +18,12 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error!!!"));
 db.once("open", () => {
   console.log("Connected to mongo...");
-  require('./utils/seeder.js')
+  //require('./utils/seeder.js')
 });
 //---/MONGO---
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-}))
 
-
+app.use(cookieParser());
 app.use(passport.initialize());
-app.use(passport.session());
 
 require('./utils/auth.js')(passport);
 
