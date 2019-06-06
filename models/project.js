@@ -10,8 +10,8 @@ module.exports = mongoose.model(
         imgUrls: {type:[String],required:true},
         contributors: [new mongoose.Schema({name: String, role: String})]
       },
-      //and then we add the fields we have defined in the cardable interface
-      require("./commonFields.js")
+      //and then we add the fields we have defined in the commons interface
+      require("./commons.js")
     )
   )
 );

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
     _id: String,
-    password: String
+    password: {type:String,required: true}
 });
 
 userSchema.methods.verifyPassword = function(password){

@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 const methodOverride= require('method-override');
-const apiRouter = require("./routers/api/main");
 const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const passport = require('passport');
@@ -30,9 +29,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 
 //Use routers 
-router.use("api/members", require("./routers/members.js"));
-router.use("api/projects", require("./routers/projects.js"));
-router.use("api/news", require("./routers/news.js"));
+app.use("/api/members", require("./routers/members.js"));
+app.use("/api/projects", require("./routers/projects.js"));
+app.use("/api/news", require("./routers/news.js"));
 
 //todo change this when you are done with the front end
 app.get("/*", (req, res, next) => {

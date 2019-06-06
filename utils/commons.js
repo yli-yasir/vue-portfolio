@@ -1,3 +1,6 @@
+function nameToId(name){
+    return name.replace(' ','-').toLowerCase() ;
+}
 function ensureArray(obj){
     return Array.isArray(obj) ? obj : Array(obj)
 }
@@ -33,6 +36,6 @@ for (let i = 0 ; i < max; i++){
 
  
 module.exports = {
-    nameListElements,zipNamedElementLists, ensureArray
+    nameToId, nameListElements,zipNamedElementLists, ensureArray
 }
 
