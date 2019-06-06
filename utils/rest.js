@@ -1,3 +1,14 @@
+const jwt = require('jsonwebtoken');
+
+function verifyToken(req,res,next){
+  try {
+    req.token = jwt.verify(req.cookies['token'],process.env.SECRET);
+    next();
+  }
+  catch(e) {
+    next(e)
+  }  
+}
 function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   //get all resources from collection
   expressRouter.get("/", async (req, res, next) => {
@@ -10,7 +21,7 @@ function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   });
 
   //post(insert) a new item into collection
-  expressRouter.post("/", async (req, res, next) => {
+  expressRouter.post("/",verifyToken,async (req, res, next) => {
     let newDocument = bodyToDocument(req.body);
     try {
       await new mongooseModel(newDocument).save();
@@ -21,7 +32,7 @@ function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   });
 
   //edit a specfic resource
-  expressRouter.put("/:id", async (req, res, next) => {
+  expressRouter.put("/:id",verifyToken, async (req, res, next) => {
     try {
       let updatedDocument = bodyToDocument(req.body);
       await mongooseModel
@@ -44,7 +55,7 @@ function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   });
 
   //get a specific resource
-  expressRouter.delete("/:id", async (req, res, next) => {
+  expressRouter.delete("/:id", verifyToken,async (req, res, next) => {
     try {
       let result = await mongooseModel.deleteOne({_id : req.params.id}).exec();
       if (result.n > 0 ){
