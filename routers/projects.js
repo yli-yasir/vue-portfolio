@@ -19,10 +19,10 @@ function bodyToDocument(body){
   contributorNames.elementName = 'name';
   contributorRoles.elementName = 'role';
 
-  const contributors = commonUtils.listsToObjects([
+  const contributors = commonUtils.listsToObjects(
     contributorNames,
     contributorRoles
-  ]);
+  );
 
   return {
     _id,
