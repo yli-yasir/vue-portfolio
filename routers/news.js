@@ -2,15 +2,19 @@ const express = require("express");
 const router = express.Router();
 const newsModel = require("../models/news");
 const restfulRouter = require("../utils/rest")
+const {nameToId} = require("../utils/commons")
 
 function bodyToDocument(body){
-  var name = body.name;
-  var description = body.description;
+  const name = body.title;
+  const _id = nameToId(name)
+  const description = body.description;
+  const thumbnailUrl = body.thumbnailUrl;
 
   return {
+    _id,
     name,
     description,
-    date : new Date()
+    thumbnailUrl
   };
  
 }

@@ -5,37 +5,43 @@ function ensureArray(obj){
     return Array.isArray(obj) ? obj : Array(obj)
 }
 
-//returns a list whose elements have a name.
-function nameListElements(list,elementName){
-    list.elementName = elementName; 
-    return list;
-}
 
-//namedElementsLists : [namedElementList],  a list which contains namedElementLists as elements
-//a single namedElementList can be obtained by using the function nameListElement(list,elementName)
-//example IO of the following function : 
-// >> zipNamedElementLists([nameListElement(["yasir","alice"],"name"),nameListElement([24,20,23],"age")]);
-// << [ { name: 'yasir', age: 24 },{ name: 'alice', age: 20 },{ name: undefined, age: 23 } ]
-function zipNamedElementLists(namedElementLists){
-    var max = 0 ; 
+//accepts lists that defined the list.elementName property
 
-    namedElementLists.forEach(function(list){
-        if (list.length > max) max = list.length
+//example:
+
+// const names = ["yasir", "zed",'james'];
+// const ages = [12, 42];
+// const countries = ["iq"];
+
+// names.elementName = 'name'
+// ages.elementName = 'age'
+// countries.elementName = 'countries'
+
+// result = fusion(names,ages,countries)
+// console.log(result);   
+// OUTPUT:
+// >> result [ { name: 'yasir', age: 12, countries: 'iq' },
+//   { name: 'zed', age: 42 },
+//   { name: 'james' } ]
+function listsToObjects(...lists) {
+    result = [];
+    lists.forEach(currentList => {
+      currentList.forEach((element, index) => {
+        result[index] =
+          typeof result[index] === "undefined"
+            ? { [currentList.elementName] : element }
+            : Object.defineProperty(result[index], currentList.elementName, {
+                value: element,
+                enumerable: true
+              });
+      });
     });
-
-var zipped = []
-for (let i = 0 ; i < max; i++){
-    obj = {};
-    namedElementLists.forEach(function(list){
-       obj[list.elementName] =  list[i];
-    })
-    zipped.push(obj);
-}
-    return zipped; 
-}
+    return result;
+  }
 
  
 module.exports = {
-    nameToId, nameListElements,zipNamedElementLists, ensureArray
+    nameToId, listsToObjects, ensureArray
 }
 
