@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const MemberModel = require("../models/member");
-const restfulRouter = require("../utils/rest")
-const {nameToId} = require('../utils/commons');
+const restfulRouter = require("../config/rest")
+const nameToId = require('../utils/commons').nameToId;
 
 function bodyToDocument(body){
   const name = body.name.trim();

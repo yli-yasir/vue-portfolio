@@ -23,7 +23,7 @@ db.once("open", () => {
 
 app.use(cookieParser());
 app.use(passport.initialize());
-require('./utils/auth.js')(passport);
+require('./config/passport.js')(passport);
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));

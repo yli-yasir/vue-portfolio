@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const commonUtils = require("../utils/commons");
 const UserModel = require('../models/user');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -13,22 +12,22 @@ async function bodyToDocument(body){
     return {
         _id,
         password
-    }
+    };
 }
     catch(error){
-        console.log(error)
+      next(error);
     }
 }
 
-//todo remove this
-router.get("/", async (req, res, next) => {
-    try {
-      let result = await UserModel.find({}).exec();
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  });
+// //todo remove this
+// router.get("/", async (req, res, next) => {
+//     try {
+//       let result = await UserModel.find({}).exec();
+//       res.json(result);
+//     } catch (error) {
+//       next(error);
+//     }
+//   });
 
 
 router.post('/',async (req,res,next)=> {
@@ -38,7 +37,7 @@ router.post('/',async (req,res,next)=> {
         res.status(201).send('resource created')
     }
     catch(error){
-        console.log(error)
+      next(error);
     }
 });
 
