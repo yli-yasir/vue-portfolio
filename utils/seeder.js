@@ -4,10 +4,6 @@ const News = require('../models/news')
 const Member = require('../models/member')
 const User = require('../models/user');
 
-// var catModel=  mongoose.model('cat', new mongoose.Schema({
-//  name: String,
-//  age: Number 
-// }))
 
 
 // mongoose.connection.dropCollection('projects',(err) => {
@@ -28,12 +24,14 @@ const User = require('../models/user');
 //   else{
 //     console.log('news collection dropped...')
 //   }
-//   new News({
-//     _id: "ios-game-released",
-//     title:"ios game has been released",
-//     description: "This program was made in JavaFx, it will help you organize your timetable!",
-//     links: [{label:"android",url:"https://www.android.com/"},{label:"ios",url:"https://www.apple.com/"}],
-//   }).save(function(error){if (!error){console.log("saved a dummy news")}});
+//   // new News({
+//   //   _id: "ios-game-released",
+//   //   title:"ios game has been released",
+//   //   description: "This program was made in JavaFx, it will help you organize your timetable!",
+//   //   links: [{label:"android",url:"https://www.android.com/"},{label:"ios",url:"https://www.apple.com/"}],
+//   // }).save(function(error){if (!error){console.log("saved a dummy news")}
+// }
+//   );
   
   
 //   new News({
@@ -72,16 +70,16 @@ const User = require('../models/user');
 // });
 
 
-mongoose.connection.dropCollection('users',(err) => {
-  if (err){
-    console.log('failed to drop users collection');
-  }
-  else{
-    console.log('users collection dropped...')
-  }
-  new User({
-    _id: "yasir",
-    password:"cats",
-  }).save(function(error){if (!error){console.log("saved a dummy user")}});
+// mongoose.connection.dropCollection('users',(err) => {
+//   if (err){
+//     console.log('failed to drop users collection');
+//   }
+//   else{
+//     console.log('users collection dropped...')
+//   }
+//   // new User({
+//   //   _id: "yasir",
+//   //   password:"cats",
+//   // }).save(function(error){if (!error){console.log("saved a dummy user")}});
   
-});
+// });

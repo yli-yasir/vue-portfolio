@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
 const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -23,12 +22,6 @@ db.once("open", () => {
 //---/MONGO---
 
 app.use(helmet());
-app.use(
-  rateLimit("/api/",{
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100 // limit each IP to 100 requests per windowMs
-  })
-);
 app.use(cookieParser());
 app.use(passport.initialize());
 require("./config/passport.js")(passport);

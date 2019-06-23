@@ -4,6 +4,8 @@ const UserModel = require("../models/user");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const multer = require('multer')();
+const {verifyToken} = require('../config/rest');
 
 async function bodyToDocument(body) {
   const _id = body.username;
@@ -38,16 +40,21 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
+router.get("/login",verifyToken,function(req,res,next){
+  res.send(req.token._id);
+})
+//logs the user in
 router.post(
-  "/login",
+  "/login",multer.none(),
   passport.authenticate("local", { session: false }),
   function(req, res) {
-    const token = jwt.sign(req.user.toJSON(), process.env.SECRET);
+    const token = jwt.sign(req.user.toJSON(), process.env.SECRET,{expiresIn: 60 * 15});
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.SECURE_COOKIE === 'true' ? true : false
     });
-    res.send("token granted");
+    res.send('granted')
+    console.log('token granted for user')
   }
 );
 

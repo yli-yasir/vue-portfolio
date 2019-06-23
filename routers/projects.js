@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ProjectModel = require("../models/project");
 const commonUtils = require("../utils/commons");
-const restfulRouter = require("../config/rest");
+const {restfulRouter} = require("../config/rest");
 
 function bodyToDocument(body){
   const name = body.name;

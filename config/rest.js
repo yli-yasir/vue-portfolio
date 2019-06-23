@@ -71,4 +71,4 @@ function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   return expressRouter;
 }
 
-module.exports = restfulRouter;
+module.exports = {restfulRouter,verifyToken};
