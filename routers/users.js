@@ -48,13 +48,13 @@ router.post(
   "/login",multer.none(),
   passport.authenticate("local", { session: false }),
   function(req, res) {
-    const token = jwt.sign(req.user.toJSON(), process.env.SECRET,{expiresIn: 60 * 15});
+    const token = jwt.sign(req.user.toJSON(), process.env.SECRET,{expiresIn: 60 * 30});
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.SECURE_COOKIE === 'true' ? true : false
     });
-    res.send('granted')
-    console.log('token granted for user')
+    res.send(req.body.username);
+    console.log('Granted token...')
   }
 );
 
