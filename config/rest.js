@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const multer = require('multer')();
 function verifyToken(req,res,next){
   try {
     req.token = jwt.verify(req.cookies['token'],process.env.SECRET);
@@ -21,7 +21,7 @@ function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   });
 
   //post(insert) a new item into collection
-  expressRouter.post("/",verifyToken,async (req, res, next) => {
+  expressRouter.post("/",verifyToken,multer.none(),async (req, res, next) => {
     let newDocument = bodyToDocument(req.body);
     try {
       await new mongooseModel(newDocument).save();
@@ -32,7 +32,7 @@ function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   });
 
   //edit a specfic resource
-  expressRouter.put("/:id",verifyToken, async (req, res, next) => {
+  expressRouter.put("/:id",verifyToken,multer.none(), async (req, res, next) => {
     try {
       let updatedDocument = bodyToDocument(req.body);
       await mongooseModel

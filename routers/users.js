@@ -40,6 +40,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
+//verify the JWT is valid, and send the username
 router.get("/login",verifyToken,function(req,res,next){
   res.send(req.token._id);
 })
@@ -57,5 +58,11 @@ router.post(
     console.log('Granted token...')
   }
 );
+
+router.post("/logout",function(req,res,next){
+  res.cookie("token",'',{expires: new Date()})
+  res.end();
+  
+})
 
 module.exports = router;
