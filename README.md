@@ -6,12 +6,14 @@ Includes personal:
 - Articles
 - Projects
 
+## Stack
+
 ### Backend
 
 - Node (RESTful server with Express.js)
 - Mongodb
 
-#### Dependent on the following environment variables:
+#### Dependent on the following environment variables (Save '.env' file at project root):
 
 * PORT: The port for the server
 
