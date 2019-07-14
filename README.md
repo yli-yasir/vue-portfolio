@@ -1,9 +1,9 @@
-# Y-Li Web App
+# Personal Portfolio Web App
 
-This app will show the handle the following information about Y-Li:
+Includes personal: 
 
-- News
-- Members
+- Milestones
+- Articles
 - Projects
 
 ### Backend
@@ -13,7 +13,7 @@ This app will show the handle the following information about Y-Li:
 
 ### Frontend
 
-Vuejs (Note that this repository only contains the distributable version of the frontend, development version is contained in a seperate repository)
+Vuejs (This repository only contains the distributable version of the frontend, development version is contained in a seperate repository)
 
 ## Database Schemas
 
@@ -27,19 +27,19 @@ Vuejs (Note that this repository only contains the distributable version of the 
 
 ---
 
-- Member
+- Article
   - Consists of common fields.
 
 ---
 
-- Project
+- Project (implements common fields)
   - imgUrls : [String]
   - contributors : [{name:String, role: String}]
   - youtubeEmbed : String (URL to youtube embed)
 
 ---
 
-- News
+- Milestones
   - Consists of common fields.
 
 ---
@@ -70,7 +70,7 @@ Vuejs (Note that this repository only contains the distributable version of the 
   - youtubeEmbed -> youtubeEmbed
 ```
 
-- Member
+- Article
 
 ```
   - name -> () -> _id
@@ -85,7 +85,7 @@ Vuejs (Note that this repository only contains the distributable version of the 
 - News
 
 ```
-  - title -> () -> _id
+  - name -> () -> _id
           |
            -> name
 

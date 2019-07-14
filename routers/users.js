@@ -20,25 +20,16 @@ async function bodyToDocument(body) {
   }
 }
 
-// //todo remove this
-// router.get("/", async (req, res, next) => {
-//     try {
-//       let result = await UserModel.find({}).exec();
-//       res.json(result);
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
 
-router.post("/register", async (req, res, next) => {
-  try {
-    const document = await bodyToDocument(req.body);
-    await new UserModel(document).save();
-    res.status(201).send("resource created");
-  } catch (error) {
-    next(error);
-  }
-});
+// router.post("/register", async (req, res, next) => {
+//   try {
+//     const document = await bodyToDocument(req.body);
+//     await new UserModel(document).save();
+//     res.status(201).send("resource created");
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 //verify the JWT is valid, and send the username
 router.get("/login",verifyToken,function(req,res,next){
