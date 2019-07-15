@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const helmet = require("helmet");
-const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -25,7 +24,6 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(passport.initialize());
 require("./config/passport.js")(passport);
-app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 
@@ -37,7 +35,7 @@ app.use("/api/users", require("./routers/users.js"));
 
 //todo change this when you are done with the front end
 app.get("/*", (req, res, next) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 app.listen(process.env.PORT, () =>

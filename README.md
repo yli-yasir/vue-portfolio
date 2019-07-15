@@ -41,12 +41,12 @@ Vuejs (This repository only contains the distributable version of the frontend, 
 ---
 
 - **Article**
-  -  implements common fields.
+  -  Implements common fields.
 
 ---
 
 - **Project**
-  - implements common fields
+  - Implements common fields
   - `imgUrls` : [String]
   - `contributors` : [{name:String, role: String}]
   - `youtubeEmbed` : String (URL to youtube embed)
@@ -54,7 +54,7 @@ Vuejs (This repository only contains the distributable version of the frontend, 
 ---
 
 - **Milestones**
-  - Consists of common fields.
+  - Implements common fields.
 
 ---
 

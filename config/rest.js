@@ -1,14 +1,7 @@
-const jwt = require('jsonwebtoken');
 const multer = require('multer')();
-function verifyToken(req,res,next){
-  try {
-    req.token = jwt.verify(req.cookies['token'],process.env.SECRET);
-    next();
-  }
-  catch(e) {
-    next(e)
-  }  
-}
+const {verifyToken} = require('../utils/jwt');
+
+
 function restfulRouter(expressRouter, mongooseModel, bodyToDocument) {
   //get all resources from collection
   expressRouter.get("/", async (req, res, next) => {
