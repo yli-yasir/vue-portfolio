@@ -6,7 +6,8 @@ function verifyToken(req,res,next){
       next();
     }
     catch(e) {
-      next(e)
+      console.log(`JWT verification failure -> ${e.message}`)
+      res.end()
     }  
   }
 

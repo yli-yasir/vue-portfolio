@@ -53,7 +53,7 @@ Vuejs (This repository only contains the distributable version of the frontend, 
 
 ---
 
-- **Milestones**
+- **Milestone**
   - Implements common fields.
 
 ---

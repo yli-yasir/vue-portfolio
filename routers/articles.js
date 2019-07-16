@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const MemberModel = require("../models/member");
+const ArticleModel = require("../models/article");
 const {restfulRouter} = require("../config/rest")
 const nameToId = require('../utils/commons').nameToId;
 
@@ -19,5 +19,5 @@ function bodyToDocument(body){
  
 }
 
-module.exports = restfulRouter(router,MemberModel,bodyToDocument);
+module.exports = restfulRouter(router,ArticleModel,bodyToDocument);
  

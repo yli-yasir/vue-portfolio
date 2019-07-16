@@ -28,9 +28,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 
 //Use routers
-app.use("/api/members", require("./routers/members.js"));
+app.use("/api/articles", require("./routers/articles.js"));
 app.use("/api/projects", require("./routers/projects.js"));
-app.use("/api/news", require("./routers/news.js"));
+app.use("/api/milestones", require("./routers/milestones.js"));
 app.use("/api/users", require("./routers/users.js"));
 
 //todo change this when you are done with the front end

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const newsModel = require("../models/news");
+const MilestoneModel = require("../models/milestone");
 const {restfulRouter} = require("../config/rest");
 const nameToId = require("../utils/commons").nameToId;
 
@@ -19,4 +19,4 @@ function bodyToDocument(body){
  
 }
 
-module.exports = restfulRouter(router,newsModel,bodyToDocument);
+module.exports = restfulRouter(router,MilestoneModel,bodyToDocument);
