@@ -37,6 +37,7 @@ Vuejs (This repository only contains the distributable version of the frontend, 
   - `name` : String
   - `description` : String
   - `thumbnailUrl` : String
+  - `originDate` : Date (The date the item was first conceived e.g. a program might have been implemented in 2015 but posted about in 2016)
 
 ---
 
@@ -48,7 +49,7 @@ Vuejs (This repository only contains the distributable version of the frontend, 
 - **Project**
   - Implements common fields
   - `imgUrls` : [String]
-  - `contributors` : [{name:String, role: String}]
+
   - `youtubeEmbed` : String (URL to youtube embed)
 
 ---
@@ -77,11 +78,11 @@ Vuejs (This repository only contains the distributable version of the frontend, 
 
   - thumbnailUrl -> thumbnailUrl
 
-  - contributorNames \
-                      -> () -> contributors
-  - contributorRoles /
-
   - youtubeEmbed -> youtubeEmbed
+
+  - originDate -> originDate
+
+
 ```
 
 - Article
@@ -94,6 +95,8 @@ Vuejs (This repository only contains the distributable version of the frontend, 
   - description -> description
 
   - thumbnailUrl -> thumbnailUrl
+
+  - originDate -> originDate
 ```
 
 - News
@@ -106,6 +109,8 @@ Vuejs (This repository only contains the distributable version of the frontend, 
   - thumbnailUrl -> thumbnailUrl
 
   - description -> description
+
+  - originDate -> originDate
 ```
 
 - User

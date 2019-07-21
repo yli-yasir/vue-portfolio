@@ -5,5 +5,6 @@ module.exports = {
     _id: String,
     name: {type:String,required: true},
     thumbnailUrl: String,
-    description: String
+    description: String,
+    originDate: Date
 };
