@@ -1,6 +1,6 @@
 function nameToId(name){
   //replace all white spaces with a -
-    return name.split('').map((e)=> e!==" "? e : '-').join('').toLowerCase() ;
+    return name.trim().split('').map((e)=> e!==" "? e : '-').join('').toLowerCase() ;
 }
 function ensureArray(obj){
     return Array.isArray(obj) ? obj : Array(obj)

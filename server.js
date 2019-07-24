@@ -4,7 +4,6 @@ const app = express();
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const passport = require("passport");
 
 //---MONGO---
 mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
@@ -22,8 +21,6 @@ db.once("open", () => {
 
 app.use(helmet());
 app.use(cookieParser());
-app.use(passport.initialize());
-require("./config/passport.js")(passport);
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 

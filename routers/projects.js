@@ -1,39 +1,72 @@
 const express = require("express");
 const router = express.Router();
 const ProjectModel = require("../models/project");
-const commonUtils = require("../utils/commons");
-const {restfulRouter} = require("../config/rest");
+const { nameToId,ensureArray } = require("../utils/commons");
+const { restfulRouter } = require("../config/rest");
 
-function bodyToDocument(body){
-  const name = body.name;
-  const _id = commonUtils.nameToId(name)
-  const thumbnailUrl = body.thumbnailUrl;
-  const description = body.description;
-  const youtubeEmbed = body.youtubeEmbed;
-  const imgUrls = commonUtils.ensureArray(body.imgUrls);
-  //------
+function validateDocument(req, res, next) {
+  let document = {};
+  let errors = {};
 
-  var contributorNames = commonUtils.ensureArray(body.contributorNames);
-  var contributorRoles = commonUtils.ensureArray(body.contributorRoles);
+  //check for errors
+  //todo should check if the name contains invalid url chars
+  const name = req.body.name;
+  if (!name) {
+    errors.nameError = "You must provide a name!";
+  }
 
-  contributorNames.elementName = 'name';
-  contributorRoles.elementName = 'role';
+  const thumbnailUrl = req.body.thumbnailUrl;
 
-  const contributors = commonUtils.listsToObjects(
-    contributorNames,
-    contributorRoles
-  );
+  const description = req.body.description;
 
-  return {
-    _id,
-    name,
-    thumbnailUrl,
-    description,
-    youtubeEmbed,
-    imgUrls,
-    contributors
-  };
- 
+  const youtubeEmbed = req.body.youtubeEmbed;
+
+  const imgUrls = req.body.imgUrls;
+  //------------
+
+  //abort if there is an error
+  if (Object.keys(errors).length !== 0) {
+    return res.status(406).send(errors);
+  }
+
+  //processing
+
+  //inject the fields into req.document while ignoring empty fields
+
+  //These fields have a value because we checked previously
+  document.name = name.trim();
+  document._id = nameToId(name);
+
+  //these fields might not have a value so we have to check before storing them
+  //it might be a string with only white space so we trim and then we check
+  thumbnailUrl = thumbnailUrl.trim();
+  if (thumbnailUrl) {
+    document.thumbnailUrl = thumbnailUrl;
+  }
+
+  description = description.trim();
+  if (description) {
+    document.description = description;
+  }
+
+
+  youtubeEmbed = youtubeEmbed.trim();
+  if (youtubeEmbed){
+    document.youtubeEmbed = youtubeEmbed
+  }
+
+  //First we have to ensure that it's an array because this is what our DB expects
+  imgUrls = ensureArray(imgUrls);
+  //trim each element, if the element still has a truthy value then keep it.
+  imgUrls = imgUrls.map(e=> e.trim()).filter(e=> Boolean(e))
+  //if there are still items in the array then inject them into the document 
+  if (imgUrls.length!==0){
+    document.imgUrls = imgUrls;
+  }
+
+  //and finally inject the document into the req object and pass control to the next route
+  req.document = document;
+  next()
 }
 
-module.exports = restfulRouter(router,ProjectModel,bodyToDocument);
+module.exports = restfulRouter(router, ProjectModel, validateDocument);

@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const UserModel = require("../models/user");
 const bcrypt = require("bcrypt");
-const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const multer = require('multer')();
-const {verifyToken} = require('../config/rest');
+const multer = require("multer")();
+const { verifyToken, login, grantToken } = require("../middleware/auth");
 
 async function bodyToDocument(body) {
   const _id = body.username;
@@ -20,7 +18,6 @@ async function bodyToDocument(body) {
   }
 }
 
-
 // router.post("/register", async (req, res, next) => {
 //   try {
 //     const document = await bodyToDocument(req.body);
@@ -32,28 +29,18 @@ async function bodyToDocument(body) {
 // });
 
 //verify the JWT is valid, and send the username
-router.get("/login",verifyToken,function(req,res,next){
-  res.send(req.token._id);
-})
-//logs the user in
-router.post(
-  "/login",multer.none(),
-  passport.authenticate("local", { session: false }),
-  function(req, res) {
-    const token = jwt.sign(req.user.toJSON(), process.env.SECRET,{expiresIn: 60 * 30});
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.SECURE_COOKIE === 'true' ? true : false
-    });
-    res.send(req.body.username);
-    console.log('Granted token...')
-  }
-);
+router.get("/login", verifyToken, function(req, res, next) {
+  res.send(req.user._id);
+});
 
-router.post("/logout",function(req,res,next){
-  res.cookie("token",'',{expires: new Date()})
+
+//logs the user in
+router.post("/login", multer.none(), login, grantToken);
+
+//log the user out
+router.post("/logout", function(req, res, next) {
+  res.cookie("token", "", { expires: new Date() });
   res.end();
-  
-})
+});
 
 module.exports = router;
