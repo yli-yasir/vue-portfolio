@@ -30,7 +30,7 @@ async function bodyToDocument(body) {
 
 //verify the JWT is valid, and send the username
 router.get("/login", verifyToken, function(req, res, next) {
-  res.send(req.user._id);
+  res.json({username: req.user._id});
 });
 
 

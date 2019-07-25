@@ -11,12 +11,14 @@ function validateDocument(req,res,next){
 
   //check for errors
   //todo should ensure the name doesn't contain characters unsafe for urls
-  const name = req.body.name;
+  let name = req.body.name.trim();
   if (!name) {errors.nameError= "You must provide a name!"}
 
-  const thumbnailUrl = req.body.thumbnailUrl;
+  let thumbnailUrl = req.body.thumbnailUrl;
 
-  const description = req.body.description;
+  let description = req.body.description;
+
+  let originDate = req.body.originDate;
 
   if(Object.keys(errors).length!==0){
     return res.status(406).json(errors);
@@ -26,16 +28,23 @@ function validateDocument(req,res,next){
   //processing (make sure we don't store any empty values and apply operations)
   
   //following fields exist because we have checked for them previously
-  document.name = name.trim();
+  document.name = name;
   document._id = nameToId(name);
 
   //trim first because we might have a string full of white spaces
+  if (thumbnailUrl){
   thumbnailUrl = thumbnailUrl.trim();
   if (thumbnailUrl){document.thumbnailUrl= thumbnailUrl}
+  }
 
+  if (description){
   description = description.trim();
   if (description){document.description= description}
-
+  }
+  
+  if (originDate){
+    document.originDate = originDate;
+  }
   req.document = document;
   next();
 }

@@ -11,12 +11,14 @@ function validateDocument(req,res,next){
 
   //VALIDATION
   //todo check for invalid url characters...
-  const name = req.body.title;
+  let name = req.body.title.trim();
   if (!name) {errors.nameError = 'You must provide a name!'};
 
-  const description = req.body.description;
+  let description = req.body.description;
 
-  const thumbnailUrl = req.body.thumbnailUrl;
+  let thumbnailUrl = req.body.thumbnailUrl;
+
+  let originDate = req.body.originDate;
   //-------
 
   //if there was an error...
@@ -25,15 +27,22 @@ function validateDocument(req,res,next){
   }
   
   //processing (apply operations on data, and make sure we don't store any useless data)
-  document.name = name.trim();
+  document.name = name;
   document._id = nameToId(name);
 
+  if (description){
   description= description.trim();
   if (description){document.description= description};
+  }
 
+  if (thumbnailUrl){
   thumbnailUrl = thumbnailUrl.trim();
   if (thumbnailUrl){document.thumbnailUrl= thumbnailUrl}
-
+  }
+  
+  if (originDate){
+    document.originDate = originDate;
+  }
     req.document = document;
     next();
   }

@@ -19,6 +19,7 @@ function restfulRouter(expressRouter, mongooseModel, validateDocument) {
     multer.none(),
     validateDocument,
     async (req, res, next) => {
+      console.log(req.document)
       let newDocument = req.document
       try {
         await new mongooseModel(newDocument).save();
