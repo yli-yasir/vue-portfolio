@@ -27,7 +27,7 @@ async function login(req, res, next) {
     const user = await userModel.findById(username).exec();
     if (!user) {
       console.log(`Login attempt failed -> Invalid Username @ ${Date.now()}`)
-      res.status(401).json({message: 'Invalid username'});
+      res.status(401).json({username: 'Invalid username'});
       return;
     }
 
@@ -35,7 +35,7 @@ async function login(req, res, next) {
 
     if (!passwordMatch) {
       console.log(`Login attempt failed -> Invalid Password @ ${Date.now()}`);
-      res.status(401).json({message: 'Invalid password'});
+      res.status(401).json({password: 'Invalid password'});
       return;
     }
 
